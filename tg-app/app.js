@@ -1645,54 +1645,34 @@ const App = {
     if (!this.state.user.settings.sound) return;
 
     try {
-      // Способ 1: Web Speech API (самый надёжный для десктопа и Android)
+      if (!this._audioEl) this._initAudio();
+      this._audioEl.pause();
+
+      // Используем свой API-прокси (обходит CORS, работает в Telegram WebView)
+      this._audioEl.src = '/api/tts?text=' + encodeURIComponent(text);
+      this._audioEl.play().catch(() => {
+        // Fallback: Web Speech API
+        this._speakFallback(text);
+      });
+    } catch(e) {
+      this._speakFallback(text);
+    }
+  },
+
+  _speakFallback(text) {
+    try {
       if ('speechSynthesis' in window) {
         speechSynthesis.cancel();
-        const voices = speechSynthesis.getVoices();
-        const zhVoice = voices.find(v => v.lang.startsWith('zh'));
-
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'zh-CN';
         utterance.rate = 0.8;
+        const voices = speechSynthesis.getVoices();
+        const zhVoice = voices.find(v => v.lang.startsWith('zh'));
         if (zhVoice) utterance.voice = zhVoice;
-
-        // Проверяем, сработает ли
-        let spoke = false;
-        utterance.onstart = () => { spoke = true; };
-        utterance.onerror = () => {
-          if (!spoke) this._speakWithAudio(text);
-        };
-
         speechSynthesis.speak(utterance);
-
-        // Если через 500мс не начал говорить — используем аудио
-        setTimeout(() => {
-          if (!spoke) this._speakWithAudio(text);
-        }, 500);
-        return;
       }
     } catch(e) {
-      console.warn('SpeechSynthesis error:', e);
-    }
-
-    // Если speechSynthesis нет — сразу аудио
-    this._speakWithAudio(text);
-  },
-
-  _speakWithAudio(text) {
-    try {
-      if (!this._audioEl) this._initAudio();
-      this._audioEl.pause();
-      this._audioEl.src = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text);
-      this._audioEl.play().catch(() => {
-        // Способ 3: new Audio как последний шанс
-        try {
-          const a = new Audio('https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=zh-CN&client=gtx&q=' + encodeURIComponent(text));
-          a.play().catch(() => {});
-        } catch(e2) {}
-      });
-    } catch(e) {
-      console.warn('Audio playback error:', e);
+      console.warn('Speech fallback error:', e);
     }
   },
 
