@@ -1570,24 +1570,65 @@ button, .option-card, .exercise-option, .match-item, .tab, .chip {
   background: #1e95d0;
 }
 
+.fallback-btn-inline {
+  position: static !important;
+  bottom: auto !important;
+  left: auto !important;
+  margin: 20px auto 40px !important;
+  display: block !important;
+  width: calc(100% - 32px) !important;
+  border-radius: 12px !important;
+  z-index: 1 !important;
+}
+
 /* --- Fallback кнопка «Назад» для браузера --- */
 .fallback-back-btn {
   position: fixed;
-  top: 12px;
-  left: 12px;
-  padding: 8px 16px;
-  background: var(--bg, #fff);
-  color: var(--accent, #2AABEE);
+  top: 10px;
+  right: 12px;
+  left: auto;
+  padding: 8px 18px;
+  background: var(--accent, #2AABEE);
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
-  border: 1px solid var(--accent, #2AABEE);
+  border: none;
   border-radius: 20px;
   cursor: pointer;
   z-index: 200;
   transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .fallback-back-btn:active {
-  background: rgba(42, 171, 238, 0.1);
+  background: #1e95d0;
+}
+
+/* --- Пробный период badge --- */
+.trial-badge {
+  margin: 8px 16px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+.trial-badge.trial-active {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.trial-badge.trial-expired {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+  color: #e65100;
+  border: 1px solid #ffcc80;
+}
+
+.trial-badge a {
+  color: var(--accent, #2AABEE);
+  font-weight: 600;
+  text-decoration: underline;
 }

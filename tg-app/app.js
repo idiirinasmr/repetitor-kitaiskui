@@ -13,6 +13,8 @@ const App = {
       level: null,              // уровень: zero/beginner/intermediate
       dailyGoal: null,          // ежедневная цель: 5/10/15/20 мин
       onboardingDone: false,    // прошёл ли онбординг полностью
+      trialStartDate: null,     // дата начала пробного периода (ISO string)
+      subscription: 'free',     // free | basic | full | yearly
       xp: 0,
       streak: 0,
       wordsLearned: [],         // id выученных слов
@@ -103,6 +105,12 @@ const App = {
       // Загружаем сохранённый прогресс
       this.loadProgress();
 
+      // Фиксируем дату начала пробного периода (при первом входе)
+      if (!this.state.user.trialStartDate) {
+        this.state.user.trialStartDate = new Date().toISOString();
+        this.saveProgress();
+      }
+
       // Обновляем стрик
       this.updateStreak();
 
@@ -134,8 +142,8 @@ const App = {
   async loadData() {
     try {
       const [wordsRes, lessonsRes] = await Promise.all([
-        fetch('data/hsk1.json'),
-        fetch('data/lessons.json')
+        fetch('data/hsk1.json?v=2'),
+        fetch('data/lessons.json?v=2')
       ]);
       if (!wordsRes.ok || !lessonsRes.ok) throw new Error('HTTP error');
       const wordsData = await wordsRes.json();
@@ -202,8 +210,55 @@ const App = {
       { id:65, hanzi:"想", pinyin:"xiǎng", tones:[3], translation:"Хотеть / Думать", category:"глаголы", examples:[] },
       { id:66, hanzi:"喜欢", pinyin:"xǐhuan", tones:[3,0], translation:"Любить / Нравиться", category:"глаголы", examples:[] },
       { id:71, hanzi:"叫", pinyin:"jiào", tones:[4], translation:"Звать / Зовут", category:"глаголы", examples:[] },
+      { id:73, hanzi:"工作", pinyin:"gōngzuò", tones:[1,4], translation:"Работать / Работа", category:"глаголы", examples:[] },
+      { id:74, hanzi:"学习", pinyin:"xuéxí", tones:[2,2], translation:"Учиться", category:"учёба", examples:[] },
+      { id:75, hanzi:"学生", pinyin:"xuéshēng", tones:[2,1], translation:"Студент / Ученик", category:"учёба", examples:[] },
+      { id:76, hanzi:"老师", pinyin:"lǎoshī", tones:[3,1], translation:"Учитель", category:"учёба", examples:[] },
+      { id:77, hanzi:"学校", pinyin:"xuéxiào", tones:[2,4], translation:"Школа", category:"учёба", examples:[] },
+      { id:78, hanzi:"书", pinyin:"shū", tones:[1], translation:"Книга", category:"учёба", examples:[] },
+      { id:79, hanzi:"字", pinyin:"zì", tones:[4], translation:"Иероглиф / Буква", category:"учёба", examples:[] },
+      { id:80, hanzi:"汉语", pinyin:"Hànyǔ", tones:[4,3], translation:"Китайский язык", category:"учёба", examples:[] },
+      { id:81, hanzi:"中文", pinyin:"Zhōngwén", tones:[1,2], translation:"Китайский (письменный)", category:"учёба", examples:[] },
       { id:89, hanzi:"高兴", pinyin:"gāoxìng", tones:[1,4], translation:"Радостный / Рад", category:"прилагательные", examples:[] },
-      { id:118, hanzi:"名字", pinyin:"míngzi", tones:[2,0], translation:"Имя", category:"повседневное", examples:[] }
+      { id:91, hanzi:"今天", pinyin:"jīntiān", tones:[1,1], translation:"Сегодня", category:"время", examples:[] },
+      { id:92, hanzi:"明天", pinyin:"míngtiān", tones:[2,1], translation:"Завтра", category:"время", examples:[] },
+      { id:93, hanzi:"昨天", pinyin:"zuótiān", tones:[2,1], translation:"Вчера", category:"время", examples:[] },
+      { id:94, hanzi:"现在", pinyin:"xiànzài", tones:[4,4], translation:"Сейчас", category:"время", examples:[] },
+      { id:95, hanzi:"时候", pinyin:"shíhou", tones:[2,0], translation:"Время / Момент", category:"время", examples:[] },
+      { id:96, hanzi:"年", pinyin:"nián", tones:[2], translation:"Год", category:"время", examples:[] },
+      { id:97, hanzi:"月", pinyin:"yuè", tones:[4], translation:"Месяц", category:"время", examples:[] },
+      { id:98, hanzi:"日", pinyin:"rì", tones:[4], translation:"День / Число", category:"время", examples:[] },
+      { id:99, hanzi:"天", pinyin:"tiān", tones:[1], translation:"День / Небо", category:"время", examples:[] },
+      { id:100, hanzi:"点", pinyin:"diǎn", tones:[3], translation:"Час (о времени) / Точка", category:"время", examples:[] },
+      { id:101, hanzi:"什么", pinyin:"shénme", tones:[2,0], translation:"Что", category:"вопросы", examples:[] },
+      { id:102, hanzi:"谁", pinyin:"shéi", tones:[2], translation:"Кто", category:"вопросы", examples:[] },
+      { id:103, hanzi:"哪儿", pinyin:"nǎr", tones:[3], translation:"Где / Куда", category:"вопросы", examples:[] },
+      { id:104, hanzi:"怎么", pinyin:"zěnme", tones:[3,0], translation:"Как", category:"вопросы", examples:[] },
+      { id:105, hanzi:"怎么样", pinyin:"zěnmeyàng", tones:[3,0,4], translation:"Как? / Каков?", category:"вопросы", examples:[] },
+      { id:106, hanzi:"多少", pinyin:"duōshao", tones:[1,3], translation:"Сколько", category:"вопросы", examples:[] },
+      { id:107, hanzi:"几", pinyin:"jǐ", tones:[3], translation:"Сколько (до 10)", category:"вопросы", examples:[] },
+      { id:108, hanzi:"吗", pinyin:"ma", tones:[0], translation:"Частица вопроса (да/нет)", category:"вопросы", examples:[] },
+      { id:109, hanzi:"呢", pinyin:"ne", tones:[0], translation:"А ты? / А...?", category:"вопросы", examples:[] },
+      { id:110, hanzi:"中国", pinyin:"Zhōngguó", tones:[1,2], translation:"Китай", category:"места", examples:[] },
+      { id:111, hanzi:"北京", pinyin:"Běijīng", tones:[3,1], translation:"Пекин", category:"места", examples:[] },
+      { id:112, hanzi:"家", pinyin:"jiā", tones:[1], translation:"Дом / Семья", category:"места", examples:[] },
+      { id:113, hanzi:"饭店", pinyin:"fàndiàn", tones:[4,4], translation:"Ресторан / Гостиница", category:"места", examples:[] },
+      { id:114, hanzi:"商店", pinyin:"shāngdiàn", tones:[1,4], translation:"Магазин", category:"места", examples:[] },
+      { id:115, hanzi:"医院", pinyin:"yīyuàn", tones:[1,4], translation:"Больница", category:"места", examples:[] },
+      { id:118, hanzi:"名字", pinyin:"míngzi", tones:[2,0], translation:"Имя", category:"повседневное", examples:[] },
+      { id:126, hanzi:"不", pinyin:"bù", tones:[4], translation:"Не / Нет", category:"повседневное", examples:[] },
+      { id:127, hanzi:"也", pinyin:"yě", tones:[3], translation:"Тоже", category:"повседневное", examples:[] },
+      { id:128, hanzi:"很", pinyin:"hěn", tones:[3], translation:"Очень", category:"повседневное", examples:[] },
+      { id:129, hanzi:"都", pinyin:"dōu", tones:[1], translation:"Все / Оба", category:"повседневное", examples:[] },
+      { id:131, hanzi:"的", pinyin:"de", tones:[0], translation:"Частица принадлежности (мой, твой)", category:"повседневное", examples:[] },
+      { id:132, hanzi:"了", pinyin:"le", tones:[0], translation:"Частица завершённости", category:"повседневное", examples:[] },
+      { id:133, hanzi:"和", pinyin:"hé", tones:[2], translation:"И / С", category:"повседневное", examples:[] },
+      { id:134, hanzi:"个", pinyin:"gè", tones:[4], translation:"Счётное слово (универсальное)", category:"повседневное", examples:[] },
+      { id:139, hanzi:"前面", pinyin:"qiánmiàn", tones:[2,4], translation:"Впереди / Спереди", category:"места", examples:[] },
+      { id:140, hanzi:"后面", pinyin:"hòumiàn", tones:[4,4], translation:"Сзади / Позади", category:"места", examples:[] },
+      { id:141, hanzi:"上", pinyin:"shàng", tones:[4], translation:"Верх / На", category:"места", examples:[] },
+      { id:142, hanzi:"下", pinyin:"xià", tones:[4], translation:"Низ / Под", category:"места", examples:[] },
+      { id:30, hanzi:"哪", pinyin:"nǎ", tones:[3], translation:"Какой / Который", category:"вопросы", examples:[] }
     ];
 
     this.data.lessons = [
@@ -240,7 +295,7 @@ const App = {
         ]
       },
       {
-        id:3, title:"Знакомство", category:"basics", description:"Представляемся и спрашиваем имя",
+        id:3, title:"Знакомство", category:"conversation", description:"Представляемся и спрашиваем имя",
         previewChars:["我","你","叫","名字"], wordIds:[21,22,23,24,71,118,51,89], xpReward:25,
         exercises:[
           {type:"choice_translation",prompt:"Как переводится?",wordId:21,correctAnswer:"Я",options:["Я","Ты","Он","Мы"]},
@@ -272,7 +327,7 @@ const App = {
         ]
       },
       {
-        id:5, title:"Еда и напитки", category:"basics", description:"Заказываем в кафе",
+        id:5, title:"Еда и напитки", category:"conversation", description:"Заказываем в кафе",
         previewChars:["水","茶","米饭","菜"], wordIds:[42,43,44,45,46,47,54,55], xpReward:25,
         exercises:[
           {type:"choice_translation",prompt:"Как переводится?",wordId:42,correctAnswer:"Вода",options:["Вода","Чай","Рис","Фрукты"]},
@@ -285,6 +340,86 @@ const App = {
           {type:"choice_translation",prompt:"Как переводится?",wordId:55,correctAnswer:"Пить",options:["Есть","Пить","Покупать","Хотеть"]},
           {type:"choice_translation",prompt:"Как переводится 我想喝水?",wordId:null,sentence:"我想喝水",correctAnswer:"Я хочу пить воду",options:["Я хочу пить воду","Я хочу есть рис","Я люблю чай","Я пью воду"]},
           {type:"pinyin_input",prompt:"Напиши пиньинь",wordId:42,correctAnswer:"shui",acceptAlso:["shuǐ"]}
+        ]
+      },
+      {
+        id:6, title:"Время и даты", category:"conversation", description:"Говорим о времени",
+        previewChars:["今天","明天","现在","年"], wordIds:[91,92,93,94,95,96,97,98,99,100], xpReward:25,
+        exercises:[
+          {type:"choice_translation",prompt:"Как переводится?",wordId:91,correctAnswer:"Сегодня",options:["Сегодня","Завтра","Вчера","Сейчас"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:92,correctAnswer:"Завтра",options:["Сегодня","Завтра","Вчера","Год"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Вчера",correctAnswer:"昨天",options:["今天","明天","昨天","现在"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:94,correctAnswer:"Сейчас",options:["Сегодня","Потом","Сейчас","Рано"]},
+          {type:"tone_listen",prompt:"Послушай и выбери правильный тон",wordId:91,correctAnswer:"jīntiān (1-й + 1-й)",options:["jīntiān (1-й + 1-й)","jíntiān (2-й + 1-й)","jǐntiān (3-й + 1-й)","jìntiān (4-й + 1-й)"]},
+          {type:"match_pairs",prompt:"Соедини пары",pairs:[{hanzi:"今天",translation:"Сегодня"},{hanzi:"明天",translation:"Завтра"},{hanzi:"昨天",translation:"Вчера"},{hanzi:"现在",translation:"Сейчас"}]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Год",correctAnswer:"年",options:["年","月","日","天"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:97,correctAnswer:"Месяц",options:["Год","Месяц","День","Час"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Час (о времени)",correctAnswer:"点",options:["天","日","点","月"]},
+          {type:"pinyin_input",prompt:"Напиши пиньинь",wordId:94,correctAnswer:"xianzai",acceptAlso:["xiànzài"]}
+        ]
+      },
+      {
+        id:7, title:"Частицы и структура", category:"grammar", description:"的, 了, 吗, 呢 — основы грамматики",
+        previewChars:["的","了","吗","呢","不"], wordIds:[131,132,108,109,126,133,134,127,128,129], xpReward:30,
+        exercises:[
+          {type:"choice_translation",prompt:"Как переводится?",wordId:131,correctAnswer:"Частица принадлежности (мой, твой)",options:["Частица принадлежности (мой, твой)","Частица завершённости","Частица вопроса","И / С"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:132,correctAnswer:"Частица завершённости",options:["Частица принадлежности","Частица завершённости","А ты?","Не / Нет"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Частица вопроса (да/нет)",correctAnswer:"吗",options:["的","了","吗","呢"]},
+          {type:"choice_translation",prompt:"Как переводится 你好吗？",wordId:null,sentence:"你好吗？",correctAnswer:"Как у тебя дела?",options:["Как у тебя дела?","Как тебя зовут?","Ты хороший?","Где ты?"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:126,correctAnswer:"Не / Нет",options:["Да","Не / Нет","Тоже","Все"]},
+          {type:"match_pairs",prompt:"Соедини пары",pairs:[{hanzi:"的",translation:"Принадлежность"},{hanzi:"了",translation:"Завершённость"},{hanzi:"吗",translation:"Вопрос да/нет"},{hanzi:"呢",translation:"А ты? / А...?"}]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:133,correctAnswer:"И / С",options:["Или","И / С","Но","Тоже"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Счётное слово (универсальное)",correctAnswer:"个",options:["的","个","了","和"]},
+          {type:"choice_translation",prompt:"Как переводится 我的书?",wordId:null,sentence:"我的书",correctAnswer:"Моя книга",options:["Моя книга","Его книга","Твоя книга","Наша книга"]},
+          {type:"pinyin_input",prompt:"Напиши пиньинь",wordId:133,correctAnswer:"he",acceptAlso:["hé"]}
+        ]
+      },
+      {
+        id:8, title:"Вопросы", category:"grammar", description:"Что? Кто? Где? Как? Сколько?",
+        previewChars:["什么","谁","哪儿","怎么"], wordIds:[101,102,103,104,105,106,107,30], xpReward:30,
+        exercises:[
+          {type:"choice_translation",prompt:"Как переводится?",wordId:101,correctAnswer:"Что",options:["Кто","Что","Где","Как"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:102,correctAnswer:"Кто",options:["Что","Кто","Где","Сколько"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Где / Куда",correctAnswer:"哪儿",options:["什么","谁","哪儿","怎么"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:104,correctAnswer:"Как",options:["Что","Сколько","Как","Кто"]},
+          {type:"tone_listen",prompt:"Послушай и выбери правильный тон",wordId:102,correctAnswer:"shéi (2-й тон)",options:["shēi (1-й тон)","shéi (2-й тон)","shěi (3-й тон)","shèi (4-й тон)"]},
+          {type:"match_pairs",prompt:"Соедини пары",pairs:[{hanzi:"什么",translation:"Что"},{hanzi:"谁",translation:"Кто"},{hanzi:"哪儿",translation:"Где"},{hanzi:"怎么",translation:"Как"}]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:106,correctAnswer:"Сколько",options:["Как","Что","Сколько","Какой"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Сколько (до 10)",correctAnswer:"几",options:["几","多少","怎么","什么"]},
+          {type:"choice_translation",prompt:"Как переводится 你去哪儿？",wordId:null,sentence:"你去哪儿？",correctAnswer:"Куда ты идёшь?",options:["Куда ты идёшь?","Где ты живёшь?","Кто ты?","Что ты делаешь?"]},
+          {type:"pinyin_input",prompt:"Напиши пиньинь",wordId:101,correctAnswer:"shenme",acceptAlso:["shénme"]}
+        ]
+      },
+      {
+        id:9, title:"Работа и учёба", category:"business", description:"Рабочие и учебные слова",
+        previewChars:["工作","学习","老师","学校"], wordIds:[73,74,75,76,77,78,79,80,81], xpReward:30,
+        exercises:[
+          {type:"choice_translation",prompt:"Как переводится?",wordId:73,correctAnswer:"Работать / Работа",options:["Учиться","Работать / Работа","Делать","Покупать"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:74,correctAnswer:"Учиться",options:["Работать","Учиться","Читать","Писать"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Учитель",correctAnswer:"老师",options:["学生","老师","同学","医生"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Студент / Ученик",correctAnswer:"学生",options:["老师","学生","医生","先生"]},
+          {type:"tone_listen",prompt:"Послушай и выбери правильный тон",wordId:73,correctAnswer:"gōngzuò (1-й + 4-й)",options:["gōngzuò (1-й + 4-й)","góngzuò (2-й + 4-й)","gǒngzuò (3-й + 4-й)","gòngzuò (4-й + 4-й)"]},
+          {type:"match_pairs",prompt:"Соедини пары",pairs:[{hanzi:"工作",translation:"Работа"},{hanzi:"学习",translation:"Учиться"},{hanzi:"老师",translation:"Учитель"},{hanzi:"学生",translation:"Студент"}]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:77,correctAnswer:"Школа",options:["Больница","Школа","Магазин","Ресторан"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Книга",correctAnswer:"书",options:["字","书","汉语","中文"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:80,correctAnswer:"Китайский язык",options:["Китайский язык","Английский язык","Китай","Пекин"]},
+          {type:"pinyin_input",prompt:"Напиши пиньинь",wordId:74,correctAnswer:"xuexi",acceptAlso:["xuéxí"]}
+        ]
+      },
+      {
+        id:10, title:"Места и навигация", category:"business", description:"Магазин, ресторан, больница, направления",
+        previewChars:["中国","商店","医院","前面"], wordIds:[110,111,112,113,114,115,139,140,141,142], xpReward:30,
+        exercises:[
+          {type:"choice_translation",prompt:"Как переводится?",wordId:110,correctAnswer:"Китай",options:["Пекин","Китай","Школа","Дом"]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:114,correctAnswer:"Магазин",options:["Ресторан","Магазин","Больница","Школа"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Больница",correctAnswer:"医院",options:["学校","医院","商店","饭店"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Ресторан",correctAnswer:"饭店",options:["饭店","商店","医院","学校"]},
+          {type:"tone_listen",prompt:"Послушай и выбери правильный тон",wordId:110,correctAnswer:"Zhōngguó (1-й + 2-й)",options:["Zhōngguó (1-й + 2-й)","Zhóngguó (2-й + 2-й)","Zhǒngguó (3-й + 2-й)","Zhòngguó (4-й + 2-й)"]},
+          {type:"match_pairs",prompt:"Соедини пары",pairs:[{hanzi:"前面",translation:"Впереди"},{hanzi:"后面",translation:"Сзади"},{hanzi:"上",translation:"Верх"},{hanzi:"下",translation:"Низ"}]},
+          {type:"choice_translation",prompt:"Как переводится?",wordId:112,correctAnswer:"Дом / Семья",options:["Школа","Дом / Семья","Магазин","Китай"]},
+          {type:"choice_hanzi",prompt:"Выбери иероглиф",translation:"Пекин",correctAnswer:"北京",options:["中国","北京","上海","南京"]},
+          {type:"choice_translation",prompt:"Как переводится 商店在前面?",wordId:null,sentence:"商店在前面",correctAnswer:"Магазин впереди",options:["Магазин впереди","Магазин сзади","Магазин внизу","Магазин наверху"]},
+          {type:"pinyin_input",prompt:"Напиши пиньинь",wordId:110,correctAnswer:"zhongguo",acceptAlso:["Zhōngguó","zhōngguó"]}
         ]
       }
     ];
@@ -325,7 +460,7 @@ const App = {
     }
 
     // BackButton Telegram или fallback
-    const noBackScreens = ['welcome', 'dashboard'];
+    const noBackScreens = ['welcome'];
     if (this.tg) {
       if (noBackScreens.includes(screenName)) {
         this.tg.BackButton.hide();
@@ -333,7 +468,7 @@ const App = {
         this.tg.BackButton.show();
       }
     } else {
-      // Fallback кнопка «Назад» для браузера
+      // Fallback кнопка «Назад» для браузера — на ВСЕХ страницах кроме welcome
       let backBtn = document.getElementById('fallback-back-btn');
       if (!backBtn) {
         backBtn = document.createElement('button');
@@ -343,7 +478,9 @@ const App = {
         backBtn.onclick = () => this.goBack();
         document.body.appendChild(backBtn);
       }
-      if (noBackScreens.includes(screenName)) {
+      // Показываем если не welcome И есть куда вернуться
+      const hasHistory = this.state.screenHistory.length > 0;
+      if (noBackScreens.includes(screenName) || !hasHistory) {
         backBtn.style.display = 'none';
       } else {
         backBtn.style.display = 'block';
@@ -377,6 +514,34 @@ const App = {
       const prevScreen = this.state.screenHistory.pop();
       this.navigate(prevScreen, false);
     }
+  },
+
+  // =============================================
+  // ПРОБНЫЙ ПЕРИОД (3 дня)
+  // =============================================
+  isTrialActive() {
+    // Платная подписка — всегда полный доступ
+    if (this.state.user.subscription !== 'free') return true;
+
+    const start = this.state.user.trialStartDate;
+    if (!start) return true; // ещё не начался
+
+    const startDate = new Date(start);
+    const now = new Date();
+    const diffMs = now - startDate;
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+    return diffDays < 3; // 3 дня бесплатно
+  },
+
+  getTrialDaysLeft() {
+    const start = this.state.user.trialStartDate;
+    if (!start) return 3;
+
+    const startDate = new Date(start);
+    const now = new Date();
+    const diffMs = now - startDate;
+    const diffDays = diffMs / (1000 * 60 * 60 * 24);
+    return Math.max(0, Math.ceil(3 - diffDays));
   },
 
   // =============================================
@@ -711,13 +876,42 @@ const App = {
       document.getElementById('current-lesson-progress-text').textContent = `${progress}%`;
     }
 
-    // Лок на разделы кроме «Основы»
+    // Блокировка разделов: если пробный период истёк — блокируем всё кроме «Основы»
+    const trialActive = this.isTrialActive();
+    const daysLeft = this.getTrialDaysLeft();
+
     document.querySelectorAll('.category-card').forEach(card => {
       const cat = card.getAttribute('onclick')?.match(/'(\w+)'/)?.[1];
       if (cat && cat !== 'basics') {
-        card.classList.add('locked');
+        if (trialActive) {
+          card.classList.remove('locked');
+        } else {
+          card.classList.add('locked');
+        }
       }
     });
+
+    // Показываем статус пробного периода
+    let trialBadge = document.getElementById('trial-badge');
+    if (!trialBadge) {
+      trialBadge = document.createElement('div');
+      trialBadge.id = 'trial-badge';
+      trialBadge.className = 'trial-badge';
+      const statsBar = document.querySelector('#screen-dashboard .stats-bar');
+      if (statsBar) statsBar.parentNode.insertBefore(trialBadge, statsBar.nextSibling);
+    }
+    if (this.state.user.subscription === 'free') {
+      if (trialActive && daysLeft > 0) {
+        trialBadge.innerHTML = `🎁 Пробный период: <strong>${daysLeft} дн.</strong> осталось — все разделы открыты!`;
+        trialBadge.className = 'trial-badge trial-active';
+      } else {
+        trialBadge.innerHTML = `⏰ Пробный период завершён. <a href="#" onclick="App.navigate('pricing'); return false;">Улучшить план</a>`;
+        trialBadge.className = 'trial-badge trial-expired';
+      }
+      trialBadge.style.display = 'block';
+    } else {
+      trialBadge.style.display = 'none';
+    }
   },
 
   continueLesson() {
@@ -732,15 +926,16 @@ const App = {
     this.haptic('selection');
 
     // Проверяем доступность раздела
-    if (categoryId !== 'basics') {
+    if (categoryId !== 'basics' && !this.isTrialActive()) {
+      const msg = 'Пробный период завершён. Оформите подписку для доступа к этому разделу.';
       if (this.tg) {
         this.tg.showPopup({
           title: 'Раздел заблокирован',
-          message: 'Этот раздел будет доступен в платной версии.',
+          message: msg,
           buttons: [{ type: 'ok' }]
         });
       } else {
-        alert('Раздел заблокирован. Будет доступен в платной версии.');
+        alert(msg);
       }
       return;
     }
@@ -754,11 +949,18 @@ const App = {
     const list = document.getElementById('lessons-list');
     list.innerHTML = '';
 
-    lessons.forEach(lesson => {
+    lessons.forEach((lesson, index) => {
       const completed = this.state.user.completedLessons.includes(lesson.id);
-      const current = lesson.id === this.state.user.currentLesson;
-      const locked = lesson.id > this.state.user.currentLesson && !completed;
 
+      // Первый урок раздела всегда доступен; остальные — если предыдущий пройден
+      let locked = false;
+      if (index > 0) {
+        const prevLesson = lessons[index - 1];
+        const prevCompleted = this.state.user.completedLessons.includes(prevLesson.id);
+        locked = !completed && !prevCompleted;
+      }
+
+      const current = !completed && !locked;
       const status = completed ? '✅' : current ? '🔵' : '🔒';
       const stateClass = completed ? 'completed' : current ? 'available' : 'locked';
 
@@ -1430,23 +1632,71 @@ const App = {
   // =============================================
   // ПРОИЗНОШЕНИЕ (Web Speech API)
   // =============================================
+  _voiceWarningShown: false,
+
   speak(text) {
     if (!this.state.user.settings.sound) return;
-    if (!('speechSynthesis' in window)) return;
+    if (!('speechSynthesis' in window)) {
+      console.warn('Web Speech API не поддерживается');
+      return;
+    }
 
     // Останавливаем предыдущее произношение
     speechSynthesis.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'zh-CN';
-    utterance.rate = 0.8;
+    const doSpeak = () => {
+      const voices = speechSynthesis.getVoices();
+      const zhVoice = voices.find(v =>
+        v.lang === 'zh-CN' || v.lang === 'zh_CN' ||
+        v.lang === 'zh-TW' || v.lang.startsWith('zh')
+      );
 
-    // Пробуем найти китайский голос
+      // Если китайского голоса нет — предупреждаем один раз
+      if (!zhVoice && voices.length > 0) {
+        if (!this._voiceWarningShown) {
+          this._voiceWarningShown = true;
+          this.showToast('Для произношения установите китайский язык в Параметры → Язык Windows');
+        }
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'zh-CN';
+      utterance.rate = 0.8;
+      if (zhVoice) utterance.voice = zhVoice;
+
+      utterance.onerror = (e) => {
+        console.warn('Ошибка произношения:', e.error);
+      };
+
+      speechSynthesis.speak(utterance);
+    };
+
+    // Голоса могут загрузиться асинхронно
     const voices = speechSynthesis.getVoices();
-    const zhVoice = voices.find(v => v.lang.startsWith('zh'));
-    if (zhVoice) utterance.voice = zhVoice;
+    if (voices.length === 0) {
+      speechSynthesis.onvoiceschanged = () => doSpeak();
+      // Fallback если событие не сработает
+      setTimeout(doSpeak, 300);
+    } else {
+      setTimeout(doSpeak, 50);
+    }
+  },
 
-    speechSynthesis.speak(utterance);
+  showToast(message) {
+    let toast = document.getElementById('app-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'app-toast';
+      toast.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;z-index:999;max-width:90%;text-align:center;transition:opacity 0.3s';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    toast.style.opacity = '1';
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.style.display = 'none', 300);
+    }, 4000);
   },
 
   // =============================================
