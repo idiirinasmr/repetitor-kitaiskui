@@ -76,38 +76,48 @@ const App = {
   // Инициализация приложения
   // =============================================
   async init() {
-    // Подключаем Telegram WebApp SDK
-    this.tg = window.Telegram?.WebApp;
-    if (this.tg) {
-      this.tg.ready();
-      this.tg.expand();  // Полноэкранный режим
+    try {
+      // Подключаем Telegram WebApp SDK
+      // Проверяем, что мы реально внутри Telegram, а не просто загрузили SDK
+      const tgWebApp = window.Telegram?.WebApp;
+      if (tgWebApp && tgWebApp.initData && tgWebApp.initData !== '') {
+        this.tg = tgWebApp;
+        this.tg.ready();
+        this.tg.expand();  // Полноэкранный режим
 
-      // Обработчик кнопки «Назад»
-      this.tg.BackButton.onClick(() => this.goBack());
-    }
+        // Обработчик кнопки «Назад»
+        this.tg.BackButton.onClick(() => this.goBack());
+      } else {
+        this.tg = null; // Не в Telegram — используем fallback
+      }
 
-    // Загружаем данные
-    await this.loadData();
+      // Загружаем данные
+      await this.loadData();
 
-    // Загружаем сохранённый прогресс
-    this.loadProgress();
+      // Загружаем сохранённый прогресс
+      this.loadProgress();
 
-    // Обновляем стрик
-    this.updateStreak();
+      // Обновляем стрик
+      this.updateStreak();
 
-    // Показываем нужный экран
-    if (this.state.user.onboardingDone) {
-      // Уже прошёл онбординг — на дашборд
-      this.navigate('dashboard');
-    } else if (this.state.user.goal && this.state.user.level && this.state.user.dailyGoal) {
-      // Прошёл выборы, но не мини-урок
-      this.navigate('mini-lesson');
-      this.renderMiniLesson();
-    } else if (this.state.user.goal && this.state.user.level) {
-      this.navigate('daily-goal');
-    } else if (this.state.user.goal) {
-      this.navigate('level');
-    } else {
+      // Показываем нужный экран
+      if (this.state.user.onboardingDone) {
+        // Уже прошёл онбординг — на дашборд
+        this.navigate('dashboard');
+      } else if (this.state.user.goal && this.state.user.level && this.state.user.dailyGoal) {
+        // Прошёл выборы, но не мини-урок
+        this.navigate('mini-lesson');
+        this.renderMiniLesson();
+      } else if (this.state.user.goal && this.state.user.level) {
+        this.navigate('daily-goal');
+      } else if (this.state.user.goal) {
+        this.navigate('level');
+      } else {
+        this.navigate('welcome');
+      }
+    } catch (e) {
+      console.error('Ошибка инициализации:', e);
+      // Показываем welcome-экран даже при ошибке
       this.navigate('welcome');
     }
   },
@@ -121,6 +131,7 @@ const App = {
         fetch('data/hsk1.json'),
         fetch('data/lessons.json')
       ]);
+      if (!wordsRes.ok || !lessonsRes.ok) throw new Error('HTTP error');
       const wordsData = await wordsRes.json();
       const lessonsData = await lessonsRes.json();
 
@@ -352,38 +363,53 @@ const App = {
   _mainButtonHandler: null,
 
   updateMainButton(screen) {
-    if (!this.tg) return;
-    const mb = this.tg.MainButton;
+    // Скрываем все fallback-кнопки
+    document.querySelectorAll('.fallback-btn').forEach(b => b.style.display = 'none');
 
-    // Снимаем предыдущий обработчик
-    if (this._mainButtonHandler) {
-      mb.offClick(this._mainButtonHandler);
-      this._mainButtonHandler = null;
-    }
+    if (this.tg) {
+      const mb = this.tg.MainButton;
 
-    switch (screen) {
-      case 'welcome':
-        mb.setText('Начать обучение');
-        this._mainButtonHandler = () => this.navigate('goal');
-        mb.onClick(this._mainButtonHandler);
-        mb.show();
-        break;
+      // Снимаем предыдущий обработчик
+      if (this._mainButtonHandler) {
+        mb.offClick(this._mainButtonHandler);
+        this._mainButtonHandler = null;
+      }
 
-      case 'mini-lesson':
-        // Показываем кнопку "Проверить" только когда выбран ответ
-        mb.hide();
-        break;
+      switch (screen) {
+        case 'welcome':
+          mb.setText('Начать обучение');
+          this._mainButtonHandler = () => this.navigate('goal');
+          mb.onClick(this._mainButtonHandler);
+          mb.show();
+          break;
 
-      case 'result':
-        mb.setText('На главную');
-        this._mainButtonHandler = () => this.navigate('dashboard');
-        mb.onClick(this._mainButtonHandler);
-        mb.show();
-        break;
+        case 'mini-lesson':
+          mb.hide();
+          break;
 
-      default:
-        mb.hide();
-        break;
+        case 'result':
+          mb.setText('На главную');
+          this._mainButtonHandler = () => this.navigate('dashboard');
+          mb.onClick(this._mainButtonHandler);
+          mb.show();
+          break;
+
+        default:
+          mb.hide();
+          break;
+      }
+    } else {
+      // Fallback для браузера — показываем HTML-кнопки
+      switch (screen) {
+        case 'welcome':
+          const btnStart = document.getElementById('btn-start');
+          if (btnStart) btnStart.style.display = 'block';
+          break;
+        case 'result':
+          const btnDash = document.getElementById('btn-to-dashboard');
+          if (btnDash) btnDash.style.display = 'block';
+          break;
+      }
     }
   },
 
@@ -398,6 +424,8 @@ const App = {
       this._mainButtonHandler = callback;
       mb.onClick(this._mainButtonHandler);
       mb.show();
+    } else {
+      this._showFallbackAction('Проверить', callback);
     }
   },
 
@@ -411,6 +439,8 @@ const App = {
       this._mainButtonHandler = callback;
       mb.onClick(this._mainButtonHandler);
       mb.show();
+    } else {
+      this._showFallbackAction('Продолжить', callback);
     }
   },
 
@@ -422,7 +452,28 @@ const App = {
         this._mainButtonHandler = null;
       }
       mb.hide();
+    } else {
+      // Убираем динамическую fallback-кнопку
+      const fb = document.getElementById('fallback-action-btn');
+      if (fb) fb.remove();
     }
+  },
+
+  // Динамическая fallback-кнопка для браузера
+  _showFallbackAction(text, callback) {
+    let fb = document.getElementById('fallback-action-btn');
+    if (!fb) {
+      fb = document.createElement('button');
+      fb.id = 'fallback-action-btn';
+      fb.className = 'fallback-btn';
+      document.body.appendChild(fb);
+    }
+    fb.textContent = text;
+    fb.style.display = 'block';
+    fb.onclick = () => {
+      fb.style.display = 'none';
+      callback();
+    };
   },
 
   // =============================================
@@ -599,16 +650,20 @@ const App = {
     this.saveProgress();
 
     // MainButton — перейти на дашборд
+    const goToDashboard = () => {
+      this.state.screenHistory = []; // Очистить историю онбординга
+      this.navigate('dashboard');
+    };
+
     if (this.tg) {
       const mb = this.tg.MainButton;
       if (this._mainButtonHandler) mb.offClick(this._mainButtonHandler);
       mb.setText('Начать учиться!');
-      this._mainButtonHandler = () => {
-        this.state.screenHistory = []; // Очистить историю онбординга
-        this.navigate('dashboard');
-      };
+      this._mainButtonHandler = goToDashboard;
       mb.onClick(this._mainButtonHandler);
       mb.show();
+    } else {
+      this._showFallbackAction('Начать учиться!', goToDashboard);
     }
   },
 
@@ -662,6 +717,8 @@ const App = {
           message: 'Этот раздел будет доступен в платной версии.',
           buttons: [{ type: 'ok' }]
         });
+      } else {
+        alert('Раздел заблокирован. Будет доступен в платной версии.');
       }
       return;
     }
@@ -705,6 +762,8 @@ const App = {
               message: `Сначала пройдите предыдущий урок.`,
               buttons: [{ type: 'ok' }]
             });
+          } else {
+            alert('Урок заблокирован. Сначала пройдите предыдущий урок.');
           }
         });
       }

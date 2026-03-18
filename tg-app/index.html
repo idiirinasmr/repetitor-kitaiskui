@@ -30,7 +30,8 @@
         <div class="feature-chip">🎙 Голосовой ввод</div>
       </div>
     </div>
-    <!-- MainButton: "Начать обучение" — управляется из JS -->
+    <!-- Fallback-кнопка для браузера (без Telegram SDK) -->
+    <button class="fallback-btn" id="btn-start" onclick="App.navigate('goal')" style="display:none">Начать обучение</button>
   </div>
 
   <!-- ============================================= -->
@@ -287,6 +288,8 @@
       <div class="result-words-list" id="result-words">
         <!-- Заполняется из JS -->
       </div>
+      <!-- Fallback-кнопка для браузера -->
+      <button class="fallback-btn" id="btn-to-dashboard" onclick="App.navigate('dashboard')" style="display:none">На главную</button>
     </div>
   </div>
 

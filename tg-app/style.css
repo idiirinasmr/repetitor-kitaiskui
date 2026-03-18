@@ -1547,3 +1547,25 @@ button, .option-card, .exercise-option, .match-item, .tab, .chip {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* --- Fallback-кнопка для браузера (без Telegram SDK) --- */
+.fallback-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background: var(--accent, #2AABEE);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border: none;
+  cursor: pointer;
+  z-index: 100;
+  transition: background 0.2s;
+}
+
+.fallback-btn:active {
+  background: #1e95d0;
+}
