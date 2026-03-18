@@ -91,6 +91,12 @@ const App = {
         this.tg = null; // Не в Telegram — используем fallback
       }
 
+      // Предзагружаем голоса для произношения
+      if ('speechSynthesis' in window) {
+        speechSynthesis.getVoices();
+        speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+      }
+
       // Загружаем данные
       await this.loadData();
 
@@ -318,13 +324,29 @@ const App = {
       tabBar.classList.remove('visible');
     }
 
-    // BackButton Telegram
+    // BackButton Telegram или fallback
+    const noBackScreens = ['welcome', 'dashboard'];
     if (this.tg) {
-      const noBackScreens = ['welcome', 'dashboard'];
       if (noBackScreens.includes(screenName)) {
         this.tg.BackButton.hide();
       } else {
         this.tg.BackButton.show();
+      }
+    } else {
+      // Fallback кнопка «Назад» для браузера
+      let backBtn = document.getElementById('fallback-back-btn');
+      if (!backBtn) {
+        backBtn = document.createElement('button');
+        backBtn.id = 'fallback-back-btn';
+        backBtn.className = 'fallback-back-btn';
+        backBtn.textContent = '← Назад';
+        backBtn.onclick = () => this.goBack();
+        document.body.appendChild(backBtn);
+      }
+      if (noBackScreens.includes(screenName)) {
+        backBtn.style.display = 'none';
+      } else {
+        backBtn.style.display = 'block';
       }
     }
 
@@ -964,7 +986,7 @@ const App = {
         if (state.matchedCount === state.totalPairs) {
           this.state.exercise.correctCount++;
           this.showXpFloat('+10 XP');
-          setTimeout(() => this.nextExercise(), 600);
+          this.showContinueButton(() => this.nextExercise());
         }
       } else {
         second.classList.add('wrong-match');
@@ -1031,14 +1053,14 @@ const App = {
     }
 
     // Скрываем кнопку "Не знаю"
-    const skipBtn = body?.querySelector('.skip-button') || document.querySelector('.skip-button');
+    const skipBtn = document.querySelector('.skip-button');
     if (skipBtn) skipBtn.style.display = 'none';
 
     // Сохраняем после каждого ответа
     this.saveProgress();
 
-    // Через 1.5 сек — следующее
-    setTimeout(() => this.nextExercise(), 1500);
+    // Показываем кнопку «Далее»
+    this.showContinueButton(() => this.nextExercise());
   },
 
   // --- Кнопка «Не знаю» ---
@@ -1065,8 +1087,8 @@ const App = {
     // Скрываем "Не знаю"
     document.querySelectorAll('.skip-button').forEach(b => b.style.display = 'none');
 
-    // Через 2 сек — следующее (без штрафа и без +XP)
-    setTimeout(() => this.nextExercise(), 2000);
+    // Кнопка «Далее» (без штрафа и без +XP)
+    this.showContinueButton(() => this.nextExercise());
   },
 
   // --- Проверка пиньинь ---
@@ -1098,7 +1120,7 @@ const App = {
 
     document.querySelectorAll('.skip-button').forEach(b => b.style.display = 'none');
     this.saveProgress();
-    setTimeout(() => this.nextExercise(), 1500);
+    this.showContinueButton(() => this.nextExercise());
   },
 
   // --- Следующее упражнение ---
@@ -1337,7 +1359,7 @@ const App = {
 
     // Ответ по умолчанию
     return `Хороший вопрос! 🤔<br><br>
-      В полной версии здесь работает AI-наставник на базе Claude, который объяснит любую тему.<br><br>
+      Помогает Наставник, который объяснит любую тему.<br><br>
       Пока попробуй спросить:<br>
       • Объясни тоны<br>
       • Как сказать «привет»?<br>
@@ -1412,9 +1434,18 @@ const App = {
     if (!this.state.user.settings.sound) return;
     if (!('speechSynthesis' in window)) return;
 
+    // Останавливаем предыдущее произношение
+    speechSynthesis.cancel();
+
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'zh-CN';
     utterance.rate = 0.8;
+
+    // Пробуем найти китайский голос
+    const voices = speechSynthesis.getVoices();
+    const zhVoice = voices.find(v => v.lang.startsWith('zh'));
+    if (zhVoice) utterance.voice = zhVoice;
+
     speechSynthesis.speak(utterance);
   },
 

@@ -1569,3 +1569,25 @@ button, .option-card, .exercise-option, .match-item, .tab, .chip {
 .fallback-btn:active {
   background: #1e95d0;
 }
+
+/* --- Fallback кнопка «Назад» для браузера --- */
+.fallback-back-btn {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  padding: 8px 16px;
+  background: var(--bg, #fff);
+  color: var(--accent, #2AABEE);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid var(--accent, #2AABEE);
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 200;
+  transition: background 0.2s;
+}
+
+.fallback-back-btn:active {
+  background: rgba(42, 171, 238, 0.1);
+}
