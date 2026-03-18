@@ -93,11 +93,8 @@ const App = {
         this.tg = null; // Не в Telegram — используем fallback
       }
 
-      // Предзагружаем голоса для произношения
-      if ('speechSynthesis' in window) {
-        speechSynthesis.getVoices();
-        speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
-      }
+      // Инициализируем аудио для произношения
+      this._initAudio();
 
       // Загружаем данные
       await this.loadData();
@@ -1634,34 +1631,58 @@ const App = {
   // =============================================
   _voiceWarningShown: false,
 
+  // Инициализация аудио-элемента (вызывается один раз)
+  _initAudio() {
+    if (this._audioEl) return;
+    this._audioEl = document.createElement('audio');
+    this._audioEl.id = 'tts-player';
+    this._audioEl.preload = 'auto';
+    document.body.appendChild(this._audioEl);
+
+    // Разблокировка аудио при первом касании (требование мобильных браузеров)
+    const unlock = () => {
+      this._audioEl.play().then(() => {
+        this._audioEl.pause();
+        this._audioEl.currentTime = 0;
+      }).catch(() => {});
+      this._audioUnlocked = true;
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('click', unlock);
+    };
+    document.addEventListener('touchstart', unlock, { once: true });
+    document.addEventListener('click', unlock, { once: true });
+  },
+
   speak(text) {
     if (!this.state.user.settings.sound) return;
 
-    // Останавливаем предыдущее аудио
-    if (this._currentAudio) {
-      this._currentAudio.pause();
-      this._currentAudio = null;
-    }
+    // Инициализируем аудио-элемент
+    if (!this._audioEl) this._initAudio();
 
-    // Способ 1: Google Translate TTS (работает везде, включая Telegram WebView)
+    // Останавливаем предыдущее
+    this._audioEl.pause();
+    this._audioEl.currentTime = 0;
+
+    // Способ 1: Google Translate TTS
     const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text);
-    const audio = new Audio(url);
-    audio.playbackRate = 0.9;
-    this._currentAudio = audio;
+    this._audioEl.src = url;
 
-    audio.play().catch(() => {
-      // Способ 2: fallback на Web Speech API
-      if ('speechSynthesis' in window) {
-        speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'zh-CN';
-        utterance.rate = 0.8;
-        const voices = speechSynthesis.getVoices();
-        const zhVoice = voices.find(v => v.lang.startsWith('zh'));
-        if (zhVoice) utterance.voice = zhVoice;
-        speechSynthesis.speak(utterance);
-      }
-    });
+    const playPromise = this._audioEl.play();
+    if (playPromise) {
+      playPromise.catch(() => {
+        // Способ 2: Web Speech API как fallback
+        if ('speechSynthesis' in window) {
+          speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'zh-CN';
+          utterance.rate = 0.8;
+          const voices = speechSynthesis.getVoices();
+          const zhVoice = voices.find(v => v.lang.startsWith('zh'));
+          if (zhVoice) utterance.voice = zhVoice;
+          speechSynthesis.speak(utterance);
+        }
+      });
+    }
   },
 
   showToast(message) {
