@@ -94,7 +94,7 @@ const App = {
       }
 
       // Инициализируем аудио для произношения
-      this._initAudio();
+      try { this._initAudio(); } catch(e) { console.warn('Audio init error:', e); }
 
       // Загружаем данные
       await this.loadData();
@@ -1636,52 +1636,63 @@ const App = {
     if (this._audioEl) return;
     this._audioEl = document.createElement('audio');
     this._audioEl.id = 'tts-player';
-    this._audioEl.preload = 'auto';
+    this._audioEl.setAttribute('playsinline', '');
+    this._audioEl.preload = 'none';
     document.body.appendChild(this._audioEl);
-
-    // Разблокировка аудио при первом касании (требование мобильных браузеров)
-    const unlock = () => {
-      this._audioEl.play().then(() => {
-        this._audioEl.pause();
-        this._audioEl.currentTime = 0;
-      }).catch(() => {});
-      this._audioUnlocked = true;
-      document.removeEventListener('touchstart', unlock);
-      document.removeEventListener('click', unlock);
-    };
-    document.addEventListener('touchstart', unlock, { once: true });
-    document.addEventListener('click', unlock, { once: true });
   },
 
   speak(text) {
     if (!this.state.user.settings.sound) return;
 
-    // Инициализируем аудио-элемент
-    if (!this._audioEl) this._initAudio();
+    try {
+      // Способ 1: Web Speech API (самый надёжный для десктопа и Android)
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const voices = speechSynthesis.getVoices();
+        const zhVoice = voices.find(v => v.lang.startsWith('zh'));
 
-    // Останавливаем предыдущее
-    this._audioEl.pause();
-    this._audioEl.currentTime = 0;
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.8;
+        if (zhVoice) utterance.voice = zhVoice;
 
-    // Способ 1: Google Translate TTS
-    const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text);
-    this._audioEl.src = url;
+        // Проверяем, сработает ли
+        let spoke = false;
+        utterance.onstart = () => { spoke = true; };
+        utterance.onerror = () => {
+          if (!spoke) this._speakWithAudio(text);
+        };
 
-    const playPromise = this._audioEl.play();
-    if (playPromise) {
-      playPromise.catch(() => {
-        // Способ 2: Web Speech API как fallback
-        if ('speechSynthesis' in window) {
-          speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'zh-CN';
-          utterance.rate = 0.8;
-          const voices = speechSynthesis.getVoices();
-          const zhVoice = voices.find(v => v.lang.startsWith('zh'));
-          if (zhVoice) utterance.voice = zhVoice;
-          speechSynthesis.speak(utterance);
-        }
+        speechSynthesis.speak(utterance);
+
+        // Если через 500мс не начал говорить — используем аудио
+        setTimeout(() => {
+          if (!spoke) this._speakWithAudio(text);
+        }, 500);
+        return;
+      }
+    } catch(e) {
+      console.warn('SpeechSynthesis error:', e);
+    }
+
+    // Если speechSynthesis нет — сразу аудио
+    this._speakWithAudio(text);
+  },
+
+  _speakWithAudio(text) {
+    try {
+      if (!this._audioEl) this._initAudio();
+      this._audioEl.pause();
+      this._audioEl.src = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text);
+      this._audioEl.play().catch(() => {
+        // Способ 3: new Audio как последний шанс
+        try {
+          const a = new Audio('https://translate.googleapis.com/translate_tts?ie=UTF-8&tl=zh-CN&client=gtx&q=' + encodeURIComponent(text));
+          a.play().catch(() => {});
+        } catch(e2) {}
       });
+    } catch(e) {
+      console.warn('Audio playback error:', e);
     }
   },
 
