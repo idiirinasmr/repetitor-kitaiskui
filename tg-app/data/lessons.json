@@ -1,0 +1,452 @@
+{
+  "categories": [
+    {
+      "id": "basics",
+      "title": "Основы",
+      "icon": "📚",
+      "description": "Базовые слова и фразы"
+    },
+    {
+      "id": "conversation",
+      "title": "Разговорный",
+      "icon": "💬",
+      "description": "Повседневное общение"
+    },
+    {
+      "id": "grammar",
+      "title": "Грамматика",
+      "icon": "📝",
+      "description": "Структура предложений"
+    },
+    {
+      "id": "business",
+      "title": "Деловой",
+      "icon": "💼",
+      "description": "Бизнес и работа"
+    }
+  ],
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Числа 1–10",
+      "category": "basics",
+      "description": "Считаем по-китайски",
+      "previewChars": ["一", "二", "三", "四", "五"],
+      "wordIds": [8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+      "xpReward": 20,
+      "exercises": [
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 8,
+          "correctAnswer": "Один",
+          "options": ["Один", "Два", "Три", "Пять"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 10,
+          "correctAnswer": "Три",
+          "options": ["Два", "Три", "Четыре", "Семь"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Пять",
+          "correctAnswer": "五",
+          "options": ["三", "五", "六", "八"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Восемь",
+          "correctAnswer": "八",
+          "options": ["六", "七", "八", "九"]
+        },
+        {
+          "type": "tone_listen",
+          "prompt": "Послушай и выбери правильный тон",
+          "wordId": 8,
+          "correctAnswer": "yī (1-й тон)",
+          "options": ["yī (1-й тон)", "yí (2-й тон)", "yǐ (3-й тон)", "yì (4-й тон)"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 13,
+          "correctAnswer": "Шесть",
+          "options": ["Четыре", "Пять", "Шесть", "Девять"]
+        },
+        {
+          "type": "match_pairs",
+          "prompt": "Соедини пары",
+          "pairs": [
+            { "hanzi": "一", "translation": "Один" },
+            { "hanzi": "三", "translation": "Три" },
+            { "hanzi": "七", "translation": "Семь" },
+            { "hanzi": "十", "translation": "Десять" }
+          ]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Десять",
+          "correctAnswer": "十",
+          "options": ["七", "八", "九", "十"]
+        },
+        {
+          "type": "pinyin_input",
+          "prompt": "Напиши пиньинь",
+          "wordId": 10,
+          "correctAnswer": "san",
+          "acceptAlso": ["sān"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 16,
+          "correctAnswer": "Девять",
+          "options": ["Шесть", "Семь", "Восемь", "Девять"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Приветствия",
+      "category": "basics",
+      "description": "Здороваемся и прощаемся",
+      "previewChars": ["你好", "谢谢", "再见"],
+      "wordIds": [1, 2, 3, 4, 5, 6, 7],
+      "xpReward": 20,
+      "exercises": [
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 1,
+          "correctAnswer": "Привет",
+          "options": ["Привет", "Спасибо", "До свидания", "Извините"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 2,
+          "correctAnswer": "Спасибо",
+          "options": ["Привет", "Спасибо", "Пожалуйста", "Извините"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "До свидания",
+          "correctAnswer": "再见",
+          "options": ["你好", "谢谢", "再见", "对不起"]
+        },
+        {
+          "type": "tone_listen",
+          "prompt": "Послушай и выбери правильный тон",
+          "wordId": 2,
+          "correctAnswer": "xièxie (4-й + нейтральный)",
+          "options": ["xīexie (1-й + нейтральный)", "xiéxie (2-й + нейтральный)", "xiěxie (3-й + нейтральный)", "xièxie (4-й + нейтральный)"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 4,
+          "correctAnswer": "Извините",
+          "options": ["Спасибо", "Извините", "Привет", "Не за что"]
+        },
+        {
+          "type": "match_pairs",
+          "prompt": "Соедини пары",
+          "pairs": [
+            { "hanzi": "你好", "translation": "Привет" },
+            { "hanzi": "谢谢", "translation": "Спасибо" },
+            { "hanzi": "再见", "translation": "До свидания" },
+            { "hanzi": "请", "translation": "Пожалуйста" }
+          ]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Ничего страшного",
+          "correctAnswer": "没关系",
+          "options": ["不客气", "没关系", "对不起", "谢谢"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 7,
+          "correctAnswer": "Не за что",
+          "options": ["Спасибо", "Пожалуйста", "Не за что", "Ничего страшного"]
+        },
+        {
+          "type": "pinyin_input",
+          "prompt": "Напиши пиньинь",
+          "wordId": 1,
+          "correctAnswer": "ni hao",
+          "acceptAlso": ["nǐ hǎo", "nihao"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Не за что",
+          "correctAnswer": "不客气",
+          "options": ["不客气", "没关系", "请", "谢谢"]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Знакомство",
+      "category": "conversation",
+      "description": "Представляемся и спрашиваем имя",
+      "previewChars": ["我", "你", "叫", "名字"],
+      "wordIds": [21, 22, 23, 24, 71, 118, 51, 89],
+      "xpReward": 25,
+      "exercises": [
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 21,
+          "correctAnswer": "Я",
+          "options": ["Я", "Ты", "Он", "Мы"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 71,
+          "correctAnswer": "Звать / Зовут",
+          "options": ["Быть", "Иметь", "Звать / Зовут", "Говорить"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Имя",
+          "correctAnswer": "名字",
+          "options": ["名字", "汉字", "学生", "朋友"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится 你叫什么名字？",
+          "wordId": null,
+          "sentence": "你叫什么名字？",
+          "correctAnswer": "Как тебя зовут?",
+          "options": ["Как тебя зовут?", "Где ты живёшь?", "Сколько тебе лет?", "Откуда ты?"]
+        },
+        {
+          "type": "tone_listen",
+          "prompt": "Послушай и выбери правильный тон",
+          "wordId": 21,
+          "correctAnswer": "wǒ (3-й тон)",
+          "options": ["wō (1-й тон)", "wó (2-й тон)", "wǒ (3-й тон)", "wò (4-й тон)"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 51,
+          "correctAnswer": "Быть / Являться",
+          "options": ["Быть / Являться", "Иметь / Есть", "Делать", "Хотеть"]
+        },
+        {
+          "type": "match_pairs",
+          "prompt": "Соедини пары",
+          "pairs": [
+            { "hanzi": "我", "translation": "Я" },
+            { "hanzi": "你", "translation": "Ты" },
+            { "hanzi": "他", "translation": "Он" },
+            { "hanzi": "她", "translation": "Она" }
+          ]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Он",
+          "correctAnswer": "他",
+          "options": ["我", "你", "他", "她"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 89,
+          "correctAnswer": "Радостный / Рад",
+          "options": ["Красивый", "Радостный / Рад", "Хороший", "Большой"]
+        },
+        {
+          "type": "pinyin_input",
+          "prompt": "Напиши пиньинь",
+          "wordId": 71,
+          "correctAnswer": "jiao",
+          "acceptAlso": ["jiào"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Семья",
+      "category": "basics",
+      "description": "Мама, папа, братья и сёстры",
+      "previewChars": ["爸爸", "妈妈", "哥哥", "姐姐"],
+      "wordIds": [31, 32, 33, 34, 35, 36, 37, 38, 39],
+      "xpReward": 25,
+      "exercises": [
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 31,
+          "correctAnswer": "Папа",
+          "options": ["Мама", "Папа", "Старший брат", "Друг"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 32,
+          "correctAnswer": "Мама",
+          "options": ["Мама", "Старшая сестра", "Младшая сестра", "Дочь"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Старший брат",
+          "correctAnswer": "哥哥",
+          "options": ["爸爸", "哥哥", "弟弟", "儿子"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Старшая сестра",
+          "correctAnswer": "姐姐",
+          "options": ["妈妈", "姐姐", "妹妹", "女儿"]
+        },
+        {
+          "type": "tone_listen",
+          "prompt": "Послушай и выбери правильный тон",
+          "wordId": 32,
+          "correctAnswer": "māma (1-й + нейтральный)",
+          "options": ["māma (1-й + нейтральный)", "máma (2-й + нейтральный)", "mǎma (3-й + нейтральный)", "màma (4-й + нейтральный)"]
+        },
+        {
+          "type": "match_pairs",
+          "prompt": "Соедини пары",
+          "pairs": [
+            { "hanzi": "爸爸", "translation": "Папа" },
+            { "hanzi": "妈妈", "translation": "Мама" },
+            { "hanzi": "哥哥", "translation": "Старший брат" },
+            { "hanzi": "妹妹", "translation": "Младшая сестра" }
+          ]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 35,
+          "correctAnswer": "Младший брат",
+          "options": ["Старший брат", "Младший брат", "Сын", "Друг"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 37,
+          "correctAnswer": "Сын",
+          "options": ["Дочь", "Сын", "Младший брат", "Папа"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Друг",
+          "correctAnswer": "朋友",
+          "options": ["朋友", "同学", "先生", "哥哥"]
+        },
+        {
+          "type": "pinyin_input",
+          "prompt": "Напиши пиньинь",
+          "wordId": 32,
+          "correctAnswer": "mama",
+          "acceptAlso": ["māma"]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Еда и напитки",
+      "category": "conversation",
+      "description": "Заказываем в кафе",
+      "previewChars": ["水", "茶", "米饭", "菜"],
+      "wordIds": [42, 43, 44, 45, 46, 47, 48, 54, 55],
+      "xpReward": 25,
+      "exercises": [
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 42,
+          "correctAnswer": "Вода",
+          "options": ["Вода", "Чай", "Рис", "Фрукты"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 43,
+          "correctAnswer": "Чай",
+          "options": ["Вода", "Чай", "Молоко", "Сок"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Рис (варёный)",
+          "correctAnswer": "米饭",
+          "options": ["水果", "米饭", "苹果", "菜"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 54,
+          "correctAnswer": "Есть (кушать)",
+          "options": ["Пить", "Есть (кушать)", "Покупать", "Готовить"]
+        },
+        {
+          "type": "tone_listen",
+          "prompt": "Послушай и выбери правильный тон",
+          "wordId": 43,
+          "correctAnswer": "chá (2-й тон)",
+          "options": ["chā (1-й тон)", "chá (2-й тон)", "chǎ (3-й тон)", "chà (4-й тон)"]
+        },
+        {
+          "type": "choice_hanzi",
+          "prompt": "Выбери иероглиф",
+          "translation": "Яблоко",
+          "correctAnswer": "苹果",
+          "options": ["水果", "苹果", "米饭", "茶"]
+        },
+        {
+          "type": "match_pairs",
+          "prompt": "Соедини пары",
+          "pairs": [
+            { "hanzi": "水", "translation": "Вода" },
+            { "hanzi": "茶", "translation": "Чай" },
+            { "hanzi": "吃", "translation": "Есть" },
+            { "hanzi": "喝", "translation": "Пить" }
+          ]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится?",
+          "wordId": 55,
+          "correctAnswer": "Пить",
+          "options": ["Есть", "Пить", "Покупать", "Хотеть"]
+        },
+        {
+          "type": "choice_translation",
+          "prompt": "Как переводится 我想喝水?",
+          "wordId": null,
+          "sentence": "我想喝水",
+          "correctAnswer": "Я хочу пить воду",
+          "options": ["Я хочу пить воду", "Я хочу есть рис", "Я люблю чай", "Я пью воду"]
+        },
+        {
+          "type": "pinyin_input",
+          "prompt": "Напиши пиньинь",
+          "wordId": 42,
+          "correctAnswer": "shui",
+          "acceptAlso": ["shuǐ"]
+        }
+      ]
+    }
+  ]
+}

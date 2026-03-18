@@ -1,0 +1,1672 @@
+{
+  "level": "HSK 1",
+  "totalWords": 150,
+  "categories": [
+    "приветствия",
+    "числа",
+    "местоимения",
+    "семья",
+    "еда",
+    "время",
+    "глаголы",
+    "прилагательные",
+    "вопросы",
+    "места",
+    "транспорт",
+    "погода",
+    "учёба",
+    "повседневное"
+  ],
+  "words": [
+    {
+      "id": 1,
+      "hanzi": "你好",
+      "pinyin": "nǐ hǎo",
+      "tones": [3, 3],
+      "translation": "Привет",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "你好，我叫小明。", "pinyin": "Nǐ hǎo, wǒ jiào Xiǎomíng.", "translation": "Привет, меня зовут Сяомин." }
+      ]
+    },
+    {
+      "id": 2,
+      "hanzi": "谢谢",
+      "pinyin": "xièxie",
+      "tones": [4, 0],
+      "translation": "Спасибо",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "谢谢你！", "pinyin": "Xièxie nǐ!", "translation": "Спасибо тебе!" }
+      ]
+    },
+    {
+      "id": 3,
+      "hanzi": "再见",
+      "pinyin": "zàijiàn",
+      "tones": [4, 4],
+      "translation": "До свидания",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "老师，再见！", "pinyin": "Lǎoshī, zàijiàn!", "translation": "Учитель, до свидания!" }
+      ]
+    },
+    {
+      "id": 4,
+      "hanzi": "对不起",
+      "pinyin": "duìbuqǐ",
+      "tones": [4, 0, 3],
+      "translation": "Извините",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "对不起，我迟到了。", "pinyin": "Duìbuqǐ, wǒ chídào le.", "translation": "Извините, я опоздал." }
+      ]
+    },
+    {
+      "id": 5,
+      "hanzi": "没关系",
+      "pinyin": "méi guānxi",
+      "tones": [2, 1, 0],
+      "translation": "Ничего страшного",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "没关系，没问题。", "pinyin": "Méi guānxi, méi wèntí.", "translation": "Ничего страшного, без проблем." }
+      ]
+    },
+    {
+      "id": 6,
+      "hanzi": "请",
+      "pinyin": "qǐng",
+      "tones": [3],
+      "translation": "Пожалуйста / Прошу",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "请坐。", "pinyin": "Qǐng zuò.", "translation": "Присаживайтесь, пожалуйста." }
+      ]
+    },
+    {
+      "id": 7,
+      "hanzi": "不客气",
+      "pinyin": "bú kèqi",
+      "tones": [2, 4, 0],
+      "translation": "Не за что",
+      "category": "приветствия",
+      "examples": [
+        { "hanzi": "不客气！", "pinyin": "Bú kèqi!", "translation": "Не за что!" }
+      ]
+    },
+    {
+      "id": 8,
+      "hanzi": "一",
+      "pinyin": "yī",
+      "tones": [1],
+      "translation": "Один",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "一个人", "pinyin": "yī gè rén", "translation": "Один человек" }
+      ]
+    },
+    {
+      "id": 9,
+      "hanzi": "二",
+      "pinyin": "èr",
+      "tones": [4],
+      "translation": "Два",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "二月", "pinyin": "èr yuè", "translation": "Февраль" }
+      ]
+    },
+    {
+      "id": 10,
+      "hanzi": "三",
+      "pinyin": "sān",
+      "tones": [1],
+      "translation": "Три",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "三个人", "pinyin": "sān gè rén", "translation": "Три человека" }
+      ]
+    },
+    {
+      "id": 11,
+      "hanzi": "四",
+      "pinyin": "sì",
+      "tones": [4],
+      "translation": "Четыре",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "四月", "pinyin": "sì yuè", "translation": "Апрель" }
+      ]
+    },
+    {
+      "id": 12,
+      "hanzi": "五",
+      "pinyin": "wǔ",
+      "tones": [3],
+      "translation": "Пять",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "五个苹果", "pinyin": "wǔ gè píngguǒ", "translation": "Пять яблок" }
+      ]
+    },
+    {
+      "id": 13,
+      "hanzi": "六",
+      "pinyin": "liù",
+      "tones": [4],
+      "translation": "Шесть",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "六点", "pinyin": "liù diǎn", "translation": "Шесть часов" }
+      ]
+    },
+    {
+      "id": 14,
+      "hanzi": "七",
+      "pinyin": "qī",
+      "tones": [1],
+      "translation": "Семь",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "七天", "pinyin": "qī tiān", "translation": "Семь дней" }
+      ]
+    },
+    {
+      "id": 15,
+      "hanzi": "八",
+      "pinyin": "bā",
+      "tones": [1],
+      "translation": "Восемь",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "八月", "pinyin": "bā yuè", "translation": "Август" }
+      ]
+    },
+    {
+      "id": 16,
+      "hanzi": "九",
+      "pinyin": "jiǔ",
+      "tones": [3],
+      "translation": "Девять",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "九十", "pinyin": "jiǔshí", "translation": "Девяносто" }
+      ]
+    },
+    {
+      "id": 17,
+      "hanzi": "十",
+      "pinyin": "shí",
+      "tones": [2],
+      "translation": "Десять",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "十个", "pinyin": "shí gè", "translation": "Десять штук" }
+      ]
+    },
+    {
+      "id": 18,
+      "hanzi": "零",
+      "pinyin": "líng",
+      "tones": [2],
+      "translation": "Ноль",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "零分", "pinyin": "líng fēn", "translation": "Ноль баллов" }
+      ]
+    },
+    {
+      "id": 19,
+      "hanzi": "两",
+      "pinyin": "liǎng",
+      "tones": [3],
+      "translation": "Два (перед счётным словом)",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "两个人", "pinyin": "liǎng gè rén", "translation": "Два человека" }
+      ]
+    },
+    {
+      "id": 20,
+      "hanzi": "百",
+      "pinyin": "bǎi",
+      "tones": [3],
+      "translation": "Сто",
+      "category": "числа",
+      "examples": [
+        { "hanzi": "一百块", "pinyin": "yī bǎi kuài", "translation": "Сто юаней" }
+      ]
+    },
+    {
+      "id": 21,
+      "hanzi": "我",
+      "pinyin": "wǒ",
+      "tones": [3],
+      "translation": "Я",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "我是学生。", "pinyin": "Wǒ shì xuéshēng.", "translation": "Я студент." }
+      ]
+    },
+    {
+      "id": 22,
+      "hanzi": "你",
+      "pinyin": "nǐ",
+      "tones": [3],
+      "translation": "Ты",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "你是谁？", "pinyin": "Nǐ shì shéi?", "translation": "Ты кто?" }
+      ]
+    },
+    {
+      "id": 23,
+      "hanzi": "他",
+      "pinyin": "tā",
+      "tones": [1],
+      "translation": "Он",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "他是我朋友。", "pinyin": "Tā shì wǒ péngyou.", "translation": "Он мой друг." }
+      ]
+    },
+    {
+      "id": 24,
+      "hanzi": "她",
+      "pinyin": "tā",
+      "tones": [1],
+      "translation": "Она",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "她很漂亮。", "pinyin": "Tā hěn piàoliang.", "translation": "Она очень красивая." }
+      ]
+    },
+    {
+      "id": 25,
+      "hanzi": "我们",
+      "pinyin": "wǒmen",
+      "tones": [3, 0],
+      "translation": "Мы",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "我们是朋友。", "pinyin": "Wǒmen shì péngyou.", "translation": "Мы друзья." }
+      ]
+    },
+    {
+      "id": 26,
+      "hanzi": "你们",
+      "pinyin": "nǐmen",
+      "tones": [3, 0],
+      "translation": "Вы",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "你们好！", "pinyin": "Nǐmen hǎo!", "translation": "Здравствуйте! (обращение к группе)" }
+      ]
+    },
+    {
+      "id": 27,
+      "hanzi": "他们",
+      "pinyin": "tāmen",
+      "tones": [1, 0],
+      "translation": "Они",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "他们是老师。", "pinyin": "Tāmen shì lǎoshī.", "translation": "Они учителя." }
+      ]
+    },
+    {
+      "id": 28,
+      "hanzi": "这",
+      "pinyin": "zhè",
+      "tones": [4],
+      "translation": "Это / Этот",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "这是什么？", "pinyin": "Zhè shì shénme?", "translation": "Что это?" }
+      ]
+    },
+    {
+      "id": 29,
+      "hanzi": "那",
+      "pinyin": "nà",
+      "tones": [4],
+      "translation": "То / Тот",
+      "category": "местоимения",
+      "examples": [
+        { "hanzi": "那是我的书。", "pinyin": "Nà shì wǒ de shū.", "translation": "То моя книга." }
+      ]
+    },
+    {
+      "id": 30,
+      "hanzi": "哪",
+      "pinyin": "nǎ",
+      "tones": [3],
+      "translation": "Какой / Который",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "你是哪国人？", "pinyin": "Nǐ shì nǎ guó rén?", "translation": "Ты из какой страны?" }
+      ]
+    },
+    {
+      "id": 31,
+      "hanzi": "爸爸",
+      "pinyin": "bàba",
+      "tones": [4, 0],
+      "translation": "Папа",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "我爸爸是医生。", "pinyin": "Wǒ bàba shì yīshēng.", "translation": "Мой папа — врач." }
+      ]
+    },
+    {
+      "id": 32,
+      "hanzi": "妈妈",
+      "pinyin": "māma",
+      "tones": [1, 0],
+      "translation": "Мама",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "妈妈做饭很好吃。", "pinyin": "Māma zuò fàn hěn hǎochī.", "translation": "Мама готовит очень вкусно." }
+      ]
+    },
+    {
+      "id": 33,
+      "hanzi": "哥哥",
+      "pinyin": "gēge",
+      "tones": [1, 0],
+      "translation": "Старший брат",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "我哥哥二十岁。", "pinyin": "Wǒ gēge èrshí suì.", "translation": "Моему старшему брату 20 лет." }
+      ]
+    },
+    {
+      "id": 34,
+      "hanzi": "姐姐",
+      "pinyin": "jiějie",
+      "tones": [3, 0],
+      "translation": "Старшая сестра",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "姐姐在北京工作。", "pinyin": "Jiějie zài Běijīng gōngzuò.", "translation": "Старшая сестра работает в Пекине." }
+      ]
+    },
+    {
+      "id": 35,
+      "hanzi": "弟弟",
+      "pinyin": "dìdi",
+      "tones": [4, 0],
+      "translation": "Младший брат",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "我弟弟十岁。", "pinyin": "Wǒ dìdi shí suì.", "translation": "Моему младшему брату 10 лет." }
+      ]
+    },
+    {
+      "id": 36,
+      "hanzi": "妹妹",
+      "pinyin": "mèimei",
+      "tones": [4, 0],
+      "translation": "Младшая сестра",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "妹妹喜欢猫。", "pinyin": "Mèimei xǐhuan māo.", "translation": "Младшая сестра любит кошек." }
+      ]
+    },
+    {
+      "id": 37,
+      "hanzi": "儿子",
+      "pinyin": "érzi",
+      "tones": [2, 0],
+      "translation": "Сын",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "他儿子很聪明。", "pinyin": "Tā érzi hěn cōngmíng.", "translation": "Его сын очень умный." }
+      ]
+    },
+    {
+      "id": 38,
+      "hanzi": "女儿",
+      "pinyin": "nǚ'ér",
+      "tones": [3, 2],
+      "translation": "Дочь",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "她女儿五岁了。", "pinyin": "Tā nǚ'ér wǔ suì le.", "translation": "Её дочери пять лет." }
+      ]
+    },
+    {
+      "id": 39,
+      "hanzi": "朋友",
+      "pinyin": "péngyou",
+      "tones": [2, 0],
+      "translation": "Друг",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "他是我的好朋友。", "pinyin": "Tā shì wǒ de hǎo péngyou.", "translation": "Он мой хороший друг." }
+      ]
+    },
+    {
+      "id": 40,
+      "hanzi": "先生",
+      "pinyin": "xiānsheng",
+      "tones": [1, 0],
+      "translation": "Господин / Муж",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "王先生你好。", "pinyin": "Wáng xiānsheng nǐ hǎo.", "translation": "Здравствуйте, господин Ван." }
+      ]
+    },
+    {
+      "id": 41,
+      "hanzi": "小姐",
+      "pinyin": "xiǎojiě",
+      "tones": [3, 3],
+      "translation": "Госпожа / Мисс",
+      "category": "семья",
+      "examples": [
+        { "hanzi": "李小姐很忙。", "pinyin": "Lǐ xiǎojiě hěn máng.", "translation": "Госпожа Ли очень занята." }
+      ]
+    },
+    {
+      "id": 42,
+      "hanzi": "水",
+      "pinyin": "shuǐ",
+      "tones": [3],
+      "translation": "Вода",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "我想喝水。", "pinyin": "Wǒ xiǎng hē shuǐ.", "translation": "Я хочу пить воду." }
+      ]
+    },
+    {
+      "id": 43,
+      "hanzi": "茶",
+      "pinyin": "chá",
+      "tones": [2],
+      "translation": "Чай",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "你喝茶吗？", "pinyin": "Nǐ hē chá ma?", "translation": "Ты пьёшь чай?" }
+      ]
+    },
+    {
+      "id": 44,
+      "hanzi": "米饭",
+      "pinyin": "mǐfàn",
+      "tones": [3, 4],
+      "translation": "Рис (варёный)",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "我想吃米饭。", "pinyin": "Wǒ xiǎng chī mǐfàn.", "translation": "Я хочу есть рис." }
+      ]
+    },
+    {
+      "id": 45,
+      "hanzi": "菜",
+      "pinyin": "cài",
+      "tones": [4],
+      "translation": "Блюдо / Овощи",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "这个菜很好吃。", "pinyin": "Zhège cài hěn hǎochī.", "translation": "Это блюдо очень вкусное." }
+      ]
+    },
+    {
+      "id": 46,
+      "hanzi": "苹果",
+      "pinyin": "píngguǒ",
+      "tones": [2, 3],
+      "translation": "Яблоко",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "我喜欢吃苹果。", "pinyin": "Wǒ xǐhuan chī píngguǒ.", "translation": "Я люблю есть яблоки." }
+      ]
+    },
+    {
+      "id": 47,
+      "hanzi": "水果",
+      "pinyin": "shuǐguǒ",
+      "tones": [3, 3],
+      "translation": "Фрукты",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "我喜欢吃水果。", "pinyin": "Wǒ xǐhuan chī shuǐguǒ.", "translation": "Я люблю есть фрукты." }
+      ]
+    },
+    {
+      "id": 48,
+      "hanzi": "杯子",
+      "pinyin": "bēizi",
+      "tones": [1, 0],
+      "translation": "Стакан / Чашка",
+      "category": "еда",
+      "examples": [
+        { "hanzi": "这是我的杯子。", "pinyin": "Zhè shì wǒ de bēizi.", "translation": "Это мой стакан." }
+      ]
+    },
+    {
+      "id": 49,
+      "hanzi": "钱",
+      "pinyin": "qián",
+      "tones": [2],
+      "translation": "Деньги",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "多少钱？", "pinyin": "Duōshao qián?", "translation": "Сколько стоит?" }
+      ]
+    },
+    {
+      "id": 50,
+      "hanzi": "块",
+      "pinyin": "kuài",
+      "tones": [4],
+      "translation": "Юань (разг.)",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "十块钱", "pinyin": "shí kuài qián", "translation": "Десять юаней" }
+      ]
+    },
+    {
+      "id": 51,
+      "hanzi": "是",
+      "pinyin": "shì",
+      "tones": [4],
+      "translation": "Быть / Являться",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我是中国人。", "pinyin": "Wǒ shì Zhōngguó rén.", "translation": "Я китаец." }
+      ]
+    },
+    {
+      "id": 52,
+      "hanzi": "有",
+      "pinyin": "yǒu",
+      "tones": [3],
+      "translation": "Иметь / Есть",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我有一个哥哥。", "pinyin": "Wǒ yǒu yī gè gēge.", "translation": "У меня есть старший брат." }
+      ]
+    },
+    {
+      "id": 53,
+      "hanzi": "没有",
+      "pinyin": "méiyǒu",
+      "tones": [2, 3],
+      "translation": "Не иметь / Нет",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我没有钱。", "pinyin": "Wǒ méiyǒu qián.", "translation": "У меня нет денег." }
+      ]
+    },
+    {
+      "id": 54,
+      "hanzi": "吃",
+      "pinyin": "chī",
+      "tones": [1],
+      "translation": "Есть (кушать)",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你吃了吗？", "pinyin": "Nǐ chī le ma?", "translation": "Ты поел?" }
+      ]
+    },
+    {
+      "id": 55,
+      "hanzi": "喝",
+      "pinyin": "hē",
+      "tones": [1],
+      "translation": "Пить",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我喝咖啡。", "pinyin": "Wǒ hē kāfēi.", "translation": "Я пью кофе." }
+      ]
+    },
+    {
+      "id": 56,
+      "hanzi": "去",
+      "pinyin": "qù",
+      "tones": [4],
+      "translation": "Идти / Ехать (куда-то)",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我去学校。", "pinyin": "Wǒ qù xuéxiào.", "translation": "Я иду в школу." }
+      ]
+    },
+    {
+      "id": 57,
+      "hanzi": "来",
+      "pinyin": "lái",
+      "tones": [2],
+      "translation": "Приходить",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你来我家吧。", "pinyin": "Nǐ lái wǒ jiā ba.", "translation": "Приходи ко мне домой." }
+      ]
+    },
+    {
+      "id": 58,
+      "hanzi": "回",
+      "pinyin": "huí",
+      "tones": [2],
+      "translation": "Возвращаться",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我回家了。", "pinyin": "Wǒ huí jiā le.", "translation": "Я вернулся домой." }
+      ]
+    },
+    {
+      "id": 59,
+      "hanzi": "做",
+      "pinyin": "zuò",
+      "tones": [4],
+      "translation": "Делать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你在做什么？", "pinyin": "Nǐ zài zuò shénme?", "translation": "Что ты делаешь?" }
+      ]
+    },
+    {
+      "id": 60,
+      "hanzi": "看",
+      "pinyin": "kàn",
+      "tones": [4],
+      "translation": "Смотреть / Читать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我在看书。", "pinyin": "Wǒ zài kàn shū.", "translation": "Я читаю книгу." }
+      ]
+    },
+    {
+      "id": 61,
+      "hanzi": "听",
+      "pinyin": "tīng",
+      "tones": [1],
+      "translation": "Слушать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我听音乐。", "pinyin": "Wǒ tīng yīnyuè.", "translation": "Я слушаю музыку." }
+      ]
+    },
+    {
+      "id": 62,
+      "hanzi": "说",
+      "pinyin": "shuō",
+      "tones": [1],
+      "translation": "Говорить",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你说中文吗？", "pinyin": "Nǐ shuō Zhōngwén ma?", "translation": "Ты говоришь по-китайски?" }
+      ]
+    },
+    {
+      "id": 63,
+      "hanzi": "读",
+      "pinyin": "dú",
+      "tones": [2],
+      "translation": "Читать вслух",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "请读这个字。", "pinyin": "Qǐng dú zhège zì.", "translation": "Пожалуйста, прочитайте этот иероглиф." }
+      ]
+    },
+    {
+      "id": 64,
+      "hanzi": "写",
+      "pinyin": "xiě",
+      "tones": [3],
+      "translation": "Писать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我会写汉字。", "pinyin": "Wǒ huì xiě hànzì.", "translation": "Я умею писать иероглифы." }
+      ]
+    },
+    {
+      "id": 65,
+      "hanzi": "想",
+      "pinyin": "xiǎng",
+      "tones": [3],
+      "translation": "Хотеть / Думать / Скучать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我想你。", "pinyin": "Wǒ xiǎng nǐ.", "translation": "Я скучаю по тебе." }
+      ]
+    },
+    {
+      "id": 66,
+      "hanzi": "喜欢",
+      "pinyin": "xǐhuan",
+      "tones": [3, 0],
+      "translation": "Любить / Нравиться",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我喜欢中国菜。", "pinyin": "Wǒ xǐhuan Zhōngguó cài.", "translation": "Мне нравится китайская кухня." }
+      ]
+    },
+    {
+      "id": 67,
+      "hanzi": "爱",
+      "pinyin": "ài",
+      "tones": [4],
+      "translation": "Любить",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我爱你。", "pinyin": "Wǒ ài nǐ.", "translation": "Я тебя люблю." }
+      ]
+    },
+    {
+      "id": 68,
+      "hanzi": "会",
+      "pinyin": "huì",
+      "tones": [4],
+      "translation": "Уметь / Мочь",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你会说英语吗？", "pinyin": "Nǐ huì shuō Yīngyǔ ma?", "translation": "Ты умеешь говорить по-английски?" }
+      ]
+    },
+    {
+      "id": 69,
+      "hanzi": "能",
+      "pinyin": "néng",
+      "tones": [2],
+      "translation": "Мочь (физически)",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我能帮你。", "pinyin": "Wǒ néng bāng nǐ.", "translation": "Я могу тебе помочь." }
+      ]
+    },
+    {
+      "id": 70,
+      "hanzi": "买",
+      "pinyin": "mǎi",
+      "tones": [3],
+      "translation": "Покупать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我想买这个。", "pinyin": "Wǒ xiǎng mǎi zhège.", "translation": "Я хочу купить это." }
+      ]
+    },
+    {
+      "id": 71,
+      "hanzi": "叫",
+      "pinyin": "jiào",
+      "tones": [4],
+      "translation": "Звать / Зовут",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": "Как тебя зовут?" }
+      ]
+    },
+    {
+      "id": 72,
+      "hanzi": "住",
+      "pinyin": "zhù",
+      "tones": [4],
+      "translation": "Жить / Проживать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你住在哪儿？", "pinyin": "Nǐ zhù zài nǎr?", "translation": "Где ты живёшь?" }
+      ]
+    },
+    {
+      "id": 73,
+      "hanzi": "工作",
+      "pinyin": "gōngzuò",
+      "tones": [1, 4],
+      "translation": "Работать / Работа",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "你在哪儿工作？", "pinyin": "Nǐ zài nǎr gōngzuò?", "translation": "Где ты работаешь?" }
+      ]
+    },
+    {
+      "id": 74,
+      "hanzi": "学习",
+      "pinyin": "xuéxí",
+      "tones": [2, 2],
+      "translation": "Учиться",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "我学习中文。", "pinyin": "Wǒ xuéxí Zhōngwén.", "translation": "Я учу китайский." }
+      ]
+    },
+    {
+      "id": 75,
+      "hanzi": "学生",
+      "pinyin": "xuéshēng",
+      "tones": [2, 1],
+      "translation": "Студент / Ученик",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "我是学生。", "pinyin": "Wǒ shì xuéshēng.", "translation": "Я студент." }
+      ]
+    },
+    {
+      "id": 76,
+      "hanzi": "老师",
+      "pinyin": "lǎoshī",
+      "tones": [3, 1],
+      "translation": "Учитель",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "老师好！", "pinyin": "Lǎoshī hǎo!", "translation": "Здравствуйте, учитель!" }
+      ]
+    },
+    {
+      "id": 77,
+      "hanzi": "学校",
+      "pinyin": "xuéxiào",
+      "tones": [2, 4],
+      "translation": "Школа",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "我去学校。", "pinyin": "Wǒ qù xuéxiào.", "translation": "Я иду в школу." }
+      ]
+    },
+    {
+      "id": 78,
+      "hanzi": "书",
+      "pinyin": "shū",
+      "tones": [1],
+      "translation": "Книга",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "这本书很好。", "pinyin": "Zhè běn shū hěn hǎo.", "translation": "Эта книга очень хорошая." }
+      ]
+    },
+    {
+      "id": 79,
+      "hanzi": "字",
+      "pinyin": "zì",
+      "tones": [4],
+      "translation": "Иероглиф / Буква",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "这个字怎么读？", "pinyin": "Zhège zì zěnme dú?", "translation": "Как читается этот иероглиф?" }
+      ]
+    },
+    {
+      "id": 80,
+      "hanzi": "汉语",
+      "pinyin": "Hànyǔ",
+      "tones": [4, 3],
+      "translation": "Китайский язык",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "我学汉语。", "pinyin": "Wǒ xué Hànyǔ.", "translation": "Я учу китайский." }
+      ]
+    },
+    {
+      "id": 81,
+      "hanzi": "中文",
+      "pinyin": "Zhōngwén",
+      "tones": [1, 2],
+      "translation": "Китайский (письменный)",
+      "category": "учёба",
+      "examples": [
+        { "hanzi": "你会说中文吗？", "pinyin": "Nǐ huì shuō Zhōngwén ma?", "translation": "Ты говоришь по-китайски?" }
+      ]
+    },
+    {
+      "id": 82,
+      "hanzi": "大",
+      "pinyin": "dà",
+      "tones": [4],
+      "translation": "Большой",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "中国很大。", "pinyin": "Zhōngguó hěn dà.", "translation": "Китай очень большой." }
+      ]
+    },
+    {
+      "id": 83,
+      "hanzi": "小",
+      "pinyin": "xiǎo",
+      "tones": [3],
+      "translation": "Маленький",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "这个很小。", "pinyin": "Zhège hěn xiǎo.", "translation": "Это очень маленькое." }
+      ]
+    },
+    {
+      "id": 84,
+      "hanzi": "多",
+      "pinyin": "duō",
+      "tones": [1],
+      "translation": "Много",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "人很多。", "pinyin": "Rén hěn duō.", "translation": "Людей очень много." }
+      ]
+    },
+    {
+      "id": 85,
+      "hanzi": "少",
+      "pinyin": "shǎo",
+      "tones": [3],
+      "translation": "Мало",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "钱太少了。", "pinyin": "Qián tài shǎo le.", "translation": "Денег слишком мало." }
+      ]
+    },
+    {
+      "id": 86,
+      "hanzi": "好",
+      "pinyin": "hǎo",
+      "tones": [3],
+      "translation": "Хороший / Хорошо",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "很好！", "pinyin": "Hěn hǎo!", "translation": "Очень хорошо!" }
+      ]
+    },
+    {
+      "id": 87,
+      "hanzi": "冷",
+      "pinyin": "lěng",
+      "tones": [3],
+      "translation": "Холодный",
+      "category": "погода",
+      "examples": [
+        { "hanzi": "今天很冷。", "pinyin": "Jīntiān hěn lěng.", "translation": "Сегодня холодно." }
+      ]
+    },
+    {
+      "id": 88,
+      "hanzi": "热",
+      "pinyin": "rè",
+      "tones": [4],
+      "translation": "Горячий / Жаркий",
+      "category": "погода",
+      "examples": [
+        { "hanzi": "今天很热。", "pinyin": "Jīntiān hěn rè.", "translation": "Сегодня жарко." }
+      ]
+    },
+    {
+      "id": 89,
+      "hanzi": "高兴",
+      "pinyin": "gāoxìng",
+      "tones": [1, 4],
+      "translation": "Радостный / Рад",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "我很高兴认识你。", "pinyin": "Wǒ hěn gāoxìng rènshi nǐ.", "translation": "Я рад с тобой познакомиться." }
+      ]
+    },
+    {
+      "id": 90,
+      "hanzi": "漂亮",
+      "pinyin": "piàoliang",
+      "tones": [4, 0],
+      "translation": "Красивый",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "这个地方很漂亮。", "pinyin": "Zhège dìfāng hěn piàoliang.", "translation": "Это место очень красивое." }
+      ]
+    },
+    {
+      "id": 91,
+      "hanzi": "今天",
+      "pinyin": "jīntiān",
+      "tones": [1, 1],
+      "translation": "Сегодня",
+      "category": "время",
+      "examples": [
+        { "hanzi": "今天星期几？", "pinyin": "Jīntiān xīngqī jǐ?", "translation": "Какой сегодня день недели?" }
+      ]
+    },
+    {
+      "id": 92,
+      "hanzi": "明天",
+      "pinyin": "míngtiān",
+      "tones": [2, 1],
+      "translation": "Завтра",
+      "category": "время",
+      "examples": [
+        { "hanzi": "明天见！", "pinyin": "Míngtiān jiàn!", "translation": "До завтра!" }
+      ]
+    },
+    {
+      "id": 93,
+      "hanzi": "昨天",
+      "pinyin": "zuótiān",
+      "tones": [2, 1],
+      "translation": "Вчера",
+      "category": "время",
+      "examples": [
+        { "hanzi": "昨天下雨了。", "pinyin": "Zuótiān xià yǔ le.", "translation": "Вчера шёл дождь." }
+      ]
+    },
+    {
+      "id": 94,
+      "hanzi": "现在",
+      "pinyin": "xiànzài",
+      "tones": [4, 4],
+      "translation": "Сейчас",
+      "category": "время",
+      "examples": [
+        { "hanzi": "现在几点？", "pinyin": "Xiànzài jǐ diǎn?", "translation": "Сколько сейчас времени?" }
+      ]
+    },
+    {
+      "id": 95,
+      "hanzi": "时候",
+      "pinyin": "shíhou",
+      "tones": [2, 0],
+      "translation": "Время / Момент",
+      "category": "время",
+      "examples": [
+        { "hanzi": "什么时候？", "pinyin": "Shénme shíhou?", "translation": "Когда?" }
+      ]
+    },
+    {
+      "id": 96,
+      "hanzi": "年",
+      "pinyin": "nián",
+      "tones": [2],
+      "translation": "Год",
+      "category": "время",
+      "examples": [
+        { "hanzi": "今年是2026年。", "pinyin": "Jīnnián shì èr líng èr liù nián.", "translation": "Сейчас 2026 год." }
+      ]
+    },
+    {
+      "id": 97,
+      "hanzi": "月",
+      "pinyin": "yuè",
+      "tones": [4],
+      "translation": "Месяц",
+      "category": "время",
+      "examples": [
+        { "hanzi": "一月", "pinyin": "yī yuè", "translation": "Январь" }
+      ]
+    },
+    {
+      "id": 98,
+      "hanzi": "日",
+      "pinyin": "rì",
+      "tones": [4],
+      "translation": "День / Число",
+      "category": "время",
+      "examples": [
+        { "hanzi": "三月十五日", "pinyin": "sān yuè shíwǔ rì", "translation": "15 марта" }
+      ]
+    },
+    {
+      "id": 99,
+      "hanzi": "天",
+      "pinyin": "tiān",
+      "tones": [1],
+      "translation": "День / Небо",
+      "category": "время",
+      "examples": [
+        { "hanzi": "每天", "pinyin": "měi tiān", "translation": "Каждый день" }
+      ]
+    },
+    {
+      "id": 100,
+      "hanzi": "点",
+      "pinyin": "diǎn",
+      "tones": [3],
+      "translation": "Час (о времени) / Точка",
+      "category": "время",
+      "examples": [
+        { "hanzi": "现在三点。", "pinyin": "Xiànzài sān diǎn.", "translation": "Сейчас три часа." }
+      ]
+    },
+    {
+      "id": 101,
+      "hanzi": "什么",
+      "pinyin": "shénme",
+      "tones": [2, 0],
+      "translation": "Что",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "这是什么？", "pinyin": "Zhè shì shénme?", "translation": "Что это?" }
+      ]
+    },
+    {
+      "id": 102,
+      "hanzi": "谁",
+      "pinyin": "shéi",
+      "tones": [2],
+      "translation": "Кто",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "他是谁？", "pinyin": "Tā shì shéi?", "translation": "Кто он?" }
+      ]
+    },
+    {
+      "id": 103,
+      "hanzi": "哪儿",
+      "pinyin": "nǎr",
+      "tones": [3],
+      "translation": "Где / Куда",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "你去哪儿？", "pinyin": "Nǐ qù nǎr?", "translation": "Куда ты идёшь?" }
+      ]
+    },
+    {
+      "id": 104,
+      "hanzi": "怎么",
+      "pinyin": "zěnme",
+      "tones": [3, 0],
+      "translation": "Как",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "这个字怎么读？", "pinyin": "Zhège zì zěnme dú?", "translation": "Как читается этот иероглиф?" }
+      ]
+    },
+    {
+      "id": 105,
+      "hanzi": "怎么样",
+      "pinyin": "zěnmeyàng",
+      "tones": [3, 0, 4],
+      "translation": "Как? / Каков?",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "天气怎么样？", "pinyin": "Tiānqì zěnmeyàng?", "translation": "Какая погода?" }
+      ]
+    },
+    {
+      "id": 106,
+      "hanzi": "多少",
+      "pinyin": "duōshao",
+      "tones": [1, 3],
+      "translation": "Сколько",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "多少钱？", "pinyin": "Duōshao qián?", "translation": "Сколько стоит?" }
+      ]
+    },
+    {
+      "id": 107,
+      "hanzi": "几",
+      "pinyin": "jǐ",
+      "tones": [3],
+      "translation": "Сколько (до 10)",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "你几岁？", "pinyin": "Nǐ jǐ suì?", "translation": "Сколько тебе лет?" }
+      ]
+    },
+    {
+      "id": 108,
+      "hanzi": "吗",
+      "pinyin": "ma",
+      "tones": [0],
+      "translation": "Частица вопроса (да/нет)",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "你好吗？", "pinyin": "Nǐ hǎo ma?", "translation": "Как дела?" }
+      ]
+    },
+    {
+      "id": 109,
+      "hanzi": "呢",
+      "pinyin": "ne",
+      "tones": [0],
+      "translation": "А ты? / А...?",
+      "category": "вопросы",
+      "examples": [
+        { "hanzi": "我很好，你呢？", "pinyin": "Wǒ hěn hǎo, nǐ ne?", "translation": "У меня хорошо, а у тебя?" }
+      ]
+    },
+    {
+      "id": 110,
+      "hanzi": "中国",
+      "pinyin": "Zhōngguó",
+      "tones": [1, 2],
+      "translation": "Китай",
+      "category": "места",
+      "examples": [
+        { "hanzi": "我想去中国。", "pinyin": "Wǒ xiǎng qù Zhōngguó.", "translation": "Я хочу поехать в Китай." }
+      ]
+    },
+    {
+      "id": 111,
+      "hanzi": "北京",
+      "pinyin": "Běijīng",
+      "tones": [3, 1],
+      "translation": "Пекин",
+      "category": "места",
+      "examples": [
+        { "hanzi": "他住在北京。", "pinyin": "Tā zhù zài Běijīng.", "translation": "Он живёт в Пекине." }
+      ]
+    },
+    {
+      "id": 112,
+      "hanzi": "家",
+      "pinyin": "jiā",
+      "tones": [1],
+      "translation": "Дом / Семья",
+      "category": "места",
+      "examples": [
+        { "hanzi": "我回家了。", "pinyin": "Wǒ huí jiā le.", "translation": "Я вернулся домой." }
+      ]
+    },
+    {
+      "id": 113,
+      "hanzi": "饭店",
+      "pinyin": "fàndiàn",
+      "tones": [4, 4],
+      "translation": "Ресторан / Гостиница",
+      "category": "места",
+      "examples": [
+        { "hanzi": "我们去饭店吃饭。", "pinyin": "Wǒmen qù fàndiàn chīfàn.", "translation": "Мы идём в ресторан есть." }
+      ]
+    },
+    {
+      "id": 114,
+      "hanzi": "商店",
+      "pinyin": "shāngdiàn",
+      "tones": [1, 4],
+      "translation": "Магазин",
+      "category": "места",
+      "examples": [
+        { "hanzi": "这个商店很大。", "pinyin": "Zhège shāngdiàn hěn dà.", "translation": "Этот магазин очень большой." }
+      ]
+    },
+    {
+      "id": 115,
+      "hanzi": "医院",
+      "pinyin": "yīyuàn",
+      "tones": [1, 4],
+      "translation": "Больница",
+      "category": "места",
+      "examples": [
+        { "hanzi": "他在医院工作。", "pinyin": "Tā zài yīyuàn gōngzuò.", "translation": "Он работает в больнице." }
+      ]
+    },
+    {
+      "id": 116,
+      "hanzi": "医生",
+      "pinyin": "yīshēng",
+      "tones": [1, 1],
+      "translation": "Врач",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "她是医生。", "pinyin": "Tā shì yīshēng.", "translation": "Она врач." }
+      ]
+    },
+    {
+      "id": 117,
+      "hanzi": "人",
+      "pinyin": "rén",
+      "tones": [2],
+      "translation": "Человек",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "他是好人。", "pinyin": "Tā shì hǎo rén.", "translation": "Он хороший человек." }
+      ]
+    },
+    {
+      "id": 118,
+      "hanzi": "名字",
+      "pinyin": "míngzi",
+      "tones": [2, 0],
+      "translation": "Имя",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "你叫什么名字？", "pinyin": "Nǐ jiào shénme míngzi?", "translation": "Как тебя зовут?" }
+      ]
+    },
+    {
+      "id": 119,
+      "hanzi": "岁",
+      "pinyin": "suì",
+      "tones": [4],
+      "translation": "Лет (возраст)",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我二十岁。", "pinyin": "Wǒ èrshí suì.", "translation": "Мне двадцать лет." }
+      ]
+    },
+    {
+      "id": 120,
+      "hanzi": "电话",
+      "pinyin": "diànhuà",
+      "tones": [4, 4],
+      "translation": "Телефон",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "你的电话号码是多少？", "pinyin": "Nǐ de diànhuà hàomǎ shì duōshao?", "translation": "Какой у тебя номер телефона?" }
+      ]
+    },
+    {
+      "id": 121,
+      "hanzi": "电脑",
+      "pinyin": "diànnǎo",
+      "tones": [4, 3],
+      "translation": "Компьютер",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我用电脑工作。", "pinyin": "Wǒ yòng diànnǎo gōngzuò.", "translation": "Я работаю на компьютере." }
+      ]
+    },
+    {
+      "id": 122,
+      "hanzi": "电视",
+      "pinyin": "diànshì",
+      "tones": [4, 4],
+      "translation": "Телевизор",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我在看电视。", "pinyin": "Wǒ zài kàn diànshì.", "translation": "Я смотрю телевизор." }
+      ]
+    },
+    {
+      "id": 123,
+      "hanzi": "东西",
+      "pinyin": "dōngxi",
+      "tones": [1, 0],
+      "translation": "Вещь / Предмет",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "这是什么东西？", "pinyin": "Zhè shì shénme dōngxi?", "translation": "Что это за вещь?" }
+      ]
+    },
+    {
+      "id": 124,
+      "hanzi": "猫",
+      "pinyin": "māo",
+      "tones": [1],
+      "translation": "Кошка",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我有一只猫。", "pinyin": "Wǒ yǒu yī zhī māo.", "translation": "У меня есть кошка." }
+      ]
+    },
+    {
+      "id": 125,
+      "hanzi": "狗",
+      "pinyin": "gǒu",
+      "tones": [3],
+      "translation": "Собака",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "那只狗很大。", "pinyin": "Nà zhī gǒu hěn dà.", "translation": "Та собака очень большая." }
+      ]
+    },
+    {
+      "id": 126,
+      "hanzi": "不",
+      "pinyin": "bù",
+      "tones": [4],
+      "translation": "Не / Нет",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我不知道。", "pinyin": "Wǒ bù zhīdào.", "translation": "Я не знаю." }
+      ]
+    },
+    {
+      "id": 127,
+      "hanzi": "很",
+      "pinyin": "hěn",
+      "tones": [3],
+      "translation": "Очень",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "我很好。", "pinyin": "Wǒ hěn hǎo.", "translation": "У меня всё хорошо." }
+      ]
+    },
+    {
+      "id": 128,
+      "hanzi": "太",
+      "pinyin": "tài",
+      "tones": [4],
+      "translation": "Слишком",
+      "category": "прилагательные",
+      "examples": [
+        { "hanzi": "太贵了！", "pinyin": "Tài guì le!", "translation": "Слишком дорого!" }
+      ]
+    },
+    {
+      "id": 129,
+      "hanzi": "都",
+      "pinyin": "dōu",
+      "tones": [1],
+      "translation": "Все / Оба",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我们都是学生。", "pinyin": "Wǒmen dōu shì xuéshēng.", "translation": "Мы все студенты." }
+      ]
+    },
+    {
+      "id": 130,
+      "hanzi": "在",
+      "pinyin": "zài",
+      "tones": [4],
+      "translation": "В / На / Находиться",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我在家。", "pinyin": "Wǒ zài jiā.", "translation": "Я дома." }
+      ]
+    },
+    {
+      "id": 131,
+      "hanzi": "的",
+      "pinyin": "de",
+      "tones": [0],
+      "translation": "Частица принадлежности (мой, твой)",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我的书", "pinyin": "wǒ de shū", "translation": "Моя книга" }
+      ]
+    },
+    {
+      "id": 132,
+      "hanzi": "了",
+      "pinyin": "le",
+      "tones": [0],
+      "translation": "Частица завершённости",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我吃了饭。", "pinyin": "Wǒ chī le fàn.", "translation": "Я поел." }
+      ]
+    },
+    {
+      "id": 133,
+      "hanzi": "和",
+      "pinyin": "hé",
+      "tones": [2],
+      "translation": "И / С",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我和他是朋友。", "pinyin": "Wǒ hé tā shì péngyou.", "translation": "Мы с ним друзья." }
+      ]
+    },
+    {
+      "id": 134,
+      "hanzi": "个",
+      "pinyin": "gè",
+      "tones": [4],
+      "translation": "Счётное слово (универсальное)",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "一个人", "pinyin": "yī gè rén", "translation": "Один человек" }
+      ]
+    },
+    {
+      "id": 135,
+      "hanzi": "下雨",
+      "pinyin": "xià yǔ",
+      "tones": [4, 3],
+      "translation": "Идёт дождь",
+      "category": "погода",
+      "examples": [
+        { "hanzi": "今天下雨了。", "pinyin": "Jīntiān xià yǔ le.", "translation": "Сегодня идёт дождь." }
+      ]
+    },
+    {
+      "id": 136,
+      "hanzi": "天气",
+      "pinyin": "tiānqì",
+      "tones": [1, 4],
+      "translation": "Погода",
+      "category": "погода",
+      "examples": [
+        { "hanzi": "今天天气很好。", "pinyin": "Jīntiān tiānqì hěn hǎo.", "translation": "Сегодня хорошая погода." }
+      ]
+    },
+    {
+      "id": 137,
+      "hanzi": "出租车",
+      "pinyin": "chūzūchē",
+      "tones": [1, 1, 1],
+      "translation": "Такси",
+      "category": "транспорт",
+      "examples": [
+        { "hanzi": "我坐出租车去。", "pinyin": "Wǒ zuò chūzūchē qù.", "translation": "Я поеду на такси." }
+      ]
+    },
+    {
+      "id": 138,
+      "hanzi": "飞机",
+      "pinyin": "fēijī",
+      "tones": [1, 1],
+      "translation": "Самолёт",
+      "category": "транспорт",
+      "examples": [
+        { "hanzi": "我坐飞机去北京。", "pinyin": "Wǒ zuò fēijī qù Běijīng.", "translation": "Я лечу в Пекин на самолёте." }
+      ]
+    },
+    {
+      "id": 139,
+      "hanzi": "前面",
+      "pinyin": "qiánmiàn",
+      "tones": [2, 4],
+      "translation": "Впереди / Спереди",
+      "category": "места",
+      "examples": [
+        { "hanzi": "学校在前面。", "pinyin": "Xuéxiào zài qiánmiàn.", "translation": "Школа впереди." }
+      ]
+    },
+    {
+      "id": 140,
+      "hanzi": "后面",
+      "pinyin": "hòumiàn",
+      "tones": [4, 4],
+      "translation": "Сзади / Позади",
+      "category": "места",
+      "examples": [
+        { "hanzi": "医院在后面。", "pinyin": "Yīyuàn zài hòumiàn.", "translation": "Больница позади." }
+      ]
+    },
+    {
+      "id": 141,
+      "hanzi": "上",
+      "pinyin": "shàng",
+      "tones": [4],
+      "translation": "Верх / На",
+      "category": "места",
+      "examples": [
+        { "hanzi": "书在桌子上。", "pinyin": "Shū zài zhuōzi shàng.", "translation": "Книга на столе." }
+      ]
+    },
+    {
+      "id": 142,
+      "hanzi": "下",
+      "pinyin": "xià",
+      "tones": [4],
+      "translation": "Низ / Под",
+      "category": "места",
+      "examples": [
+        { "hanzi": "猫在桌子下。", "pinyin": "Māo zài zhuōzi xià.", "translation": "Кошка под столом." }
+      ]
+    },
+    {
+      "id": 143,
+      "hanzi": "里",
+      "pinyin": "lǐ",
+      "tones": [3],
+      "translation": "Внутри",
+      "category": "места",
+      "examples": [
+        { "hanzi": "他在房间里。", "pinyin": "Tā zài fángjiān lǐ.", "translation": "Он в комнате." }
+      ]
+    },
+    {
+      "id": 144,
+      "hanzi": "衣服",
+      "pinyin": "yīfu",
+      "tones": [1, 0],
+      "translation": "Одежда",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "这件衣服很漂亮。", "pinyin": "Zhè jiàn yīfu hěn piàoliang.", "translation": "Эта одежда очень красивая." }
+      ]
+    },
+    {
+      "id": 145,
+      "hanzi": "桌子",
+      "pinyin": "zhuōzi",
+      "tones": [1, 0],
+      "translation": "Стол",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "桌子上有书。", "pinyin": "Zhuōzi shàng yǒu shū.", "translation": "На столе есть книга." }
+      ]
+    },
+    {
+      "id": 146,
+      "hanzi": "椅子",
+      "pinyin": "yǐzi",
+      "tones": [3, 0],
+      "translation": "Стул",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "请坐椅子。", "pinyin": "Qǐng zuò yǐzi.", "translation": "Пожалуйста, садитесь на стул." }
+      ]
+    },
+    {
+      "id": 147,
+      "hanzi": "睡觉",
+      "pinyin": "shuìjiào",
+      "tones": [4, 4],
+      "translation": "Спать",
+      "category": "глаголы",
+      "examples": [
+        { "hanzi": "我想睡觉了。", "pinyin": "Wǒ xiǎng shuìjiào le.", "translation": "Я хочу спать." }
+      ]
+    },
+    {
+      "id": 148,
+      "hanzi": "打电话",
+      "pinyin": "dǎ diànhuà",
+      "tones": [3, 4, 4],
+      "translation": "Звонить по телефону",
+      "category": "повседневное",
+      "examples": [
+        { "hanzi": "我给你打电话。", "pinyin": "Wǒ gěi nǐ dǎ diànhuà.", "translation": "Я тебе позвоню." }
+      ]
+    },
+    {
+      "id": 149,
+      "hanzi": "下午",
+      "pinyin": "xiàwǔ",
+      "tones": [4, 3],
+      "translation": "После обеда / Дневное время",
+      "category": "время",
+      "examples": [
+        { "hanzi": "下午好！", "pinyin": "Xiàwǔ hǎo!", "translation": "Добрый день!" }
+      ]
+    },
+    {
+      "id": 150,
+      "hanzi": "上午",
+      "pinyin": "shàngwǔ",
+      "tones": [4, 3],
+      "translation": "Утро / До обеда",
+      "category": "время",
+      "examples": [
+        { "hanzi": "上午好！", "pinyin": "Shàngwǔ hǎo!", "translation": "Доброе утро!" }
+      ]
+    }
+  ]
+}

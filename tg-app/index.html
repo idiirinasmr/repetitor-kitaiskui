@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Репетитор по китайскому</title>
+
+  <!-- Telegram Web App SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Шрифт для иероглифов + интерфейса -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Онбординг — Приветствие                -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-welcome" data-screen="welcome">
+    <div class="screen-content onboarding">
+      <div class="onboarding-illustration">🐉</div>
+      <h1 class="onboarding-title">Привет! Я твой<br>AI-репетитор<br>по китайскому</h1>
+      <p class="onboarding-subtitle">Выучи 150 иероглифов за месяц.<br>Уроки по 5 минут, прямо в Telegram.</p>
+      <div class="onboarding-features">
+        <div class="feature-chip">🎮 Игровой формат</div>
+        <div class="feature-chip">🤖 AI-наставник</div>
+        <div class="feature-chip">🎙 Голосовой ввод</div>
+      </div>
+    </div>
+    <!-- MainButton: "Начать обучение" — управляется из JS -->
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Онбординг — Выбор цели                -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-goal" data-screen="goal">
+    <div class="screen-content onboarding">
+      <h2 class="onboarding-question">Зачем тебе<br>китайский?</h2>
+      <div class="option-list">
+        <button class="option-card" data-value="study" onclick="App.selectGoal(this)">
+          <span class="option-icon">🎓</span>
+          <div class="option-text">
+            <strong>Учёба / HSK</strong>
+            <span>Подготовка к экзамену</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="work" onclick="App.selectGoal(this)">
+          <span class="option-icon">💼</span>
+          <div class="option-text">
+            <strong>Работа / Бизнес</strong>
+            <span>Деловой китайский</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="travel" onclick="App.selectGoal(this)">
+          <span class="option-icon">✈️</span>
+          <div class="option-text">
+            <strong>Путешествия</strong>
+            <span>Базовые фразы</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="hobby" onclick="App.selectGoal(this)">
+          <span class="option-icon">🎯</span>
+          <div class="option-text">
+            <strong>Хобби / Интерес</strong>
+            <span>Для удовольствия</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Онбординг — Выбор уровня              -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-level" data-screen="level">
+    <div class="screen-content onboarding">
+      <h2 class="onboarding-question">Какой у тебя<br>уровень?</h2>
+      <div class="option-list">
+        <button class="option-card" data-value="zero" onclick="App.selectLevel(this)">
+          <span class="option-icon">🌱</span>
+          <div class="option-text">
+            <strong>Нулевой</strong>
+            <span>Не знаю ни слова</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="beginner" onclick="App.selectLevel(this)">
+          <span class="option-icon">📗</span>
+          <div class="option-text">
+            <strong>Начинающий</strong>
+            <span>Знаю 你好 и 谢谢</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="intermediate" onclick="App.selectLevel(this)">
+          <span class="option-icon">📘</span>
+          <div class="option-text">
+            <strong>Средний</strong>
+            <span>Могу строить фразы</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Онбординг — Ежедневная цель           -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-daily-goal" data-screen="daily-goal">
+    <div class="screen-content onboarding">
+      <h2 class="onboarding-question">Сколько минут<br>в день?</h2>
+      <div class="option-list">
+        <button class="option-card" data-value="5" onclick="App.selectDailyGoal(this)">
+          <span class="option-icon">🐌</span>
+          <div class="option-text">
+            <strong>5 минут</strong>
+            <span>Спокойный темп</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="10" onclick="App.selectDailyGoal(this)">
+          <span class="option-icon">⚡</span>
+          <div class="option-text">
+            <strong>10 минут</strong>
+            <span>Оптимальный</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="15" onclick="App.selectDailyGoal(this)">
+          <span class="option-icon">🔥</span>
+          <div class="option-text">
+            <strong>15 минут</strong>
+            <span>Серьёзный подход</span>
+          </div>
+        </button>
+        <button class="option-card" data-value="20" onclick="App.selectDailyGoal(this)">
+          <span class="option-icon">🚀</span>
+          <div class="option-text">
+            <strong>20 минут</strong>
+            <span>Максимальный</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Онбординг — Мини-урок (aha moment)    -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-mini-lesson" data-screen="mini-lesson">
+    <div class="screen-content exercise-screen">
+      <!-- Точки прогресса -->
+      <div class="mini-lesson-header">
+        <div class="mini-dots" id="mini-dots">
+          <span class="mini-dot active"></span>
+          <span class="mini-dot"></span>
+          <span class="mini-dot"></span>
+        </div>
+        <span class="exercise-counter" id="mini-counter">1/3</span>
+      </div>
+
+      <!-- Тело мини-урока -->
+      <div class="exercise-body" id="mini-lesson-body">
+        <!-- Заполняется из JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Главная (Дашборд)                     -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-dashboard" data-screen="dashboard">
+    <div class="screen-content with-tabs">
+
+      <!-- Шапка со стриком и XP -->
+      <div class="dashboard-header">
+        <div class="stat-badge">
+          <span class="stat-icon">🔥</span>
+          <span class="stat-value" id="streak-count">0</span>
+          <span class="stat-label">дней</span>
+        </div>
+        <div class="stat-badge">
+          <span class="stat-icon">⭐</span>
+          <span class="stat-value" id="xp-count">0</span>
+          <span class="stat-label">XP</span>
+        </div>
+      </div>
+
+      <!-- Карточка текущего урока -->
+      <div class="current-lesson-card" id="current-lesson" onclick="App.continueLesson()">
+        <div class="lesson-card-top">
+          <span class="lesson-card-label">Продолжить</span>
+          <span class="lesson-card-xp" id="current-lesson-xp">+20 XP</span>
+        </div>
+        <h3 class="lesson-card-title" id="current-lesson-title">Урок 1: Числа 1–10</h3>
+        <div class="progress-bar">
+          <div class="progress-fill" id="current-lesson-progress" style="width: 0%"></div>
+        </div>
+        <span class="progress-text" id="current-lesson-progress-text">0%</span>
+      </div>
+
+      <!-- Разделы 2x2 -->
+      <h3 class="section-title">Разделы</h3>
+      <div class="categories-grid">
+        <button class="category-card" onclick="App.openCategory('basics')">
+          <span class="category-icon">📚</span>
+          <span class="category-name">Основы</span>
+        </button>
+        <button class="category-card" onclick="App.openCategory('conversation')">
+          <span class="category-icon">💬</span>
+          <span class="category-name">Разговорный</span>
+        </button>
+        <button class="category-card" onclick="App.openCategory('grammar')">
+          <span class="category-icon">📝</span>
+          <span class="category-name">Грамматика</span>
+        </button>
+        <button class="category-card" onclick="App.openCategory('business')">
+          <span class="category-icon">💼</span>
+          <span class="category-name">Деловой</span>
+        </button>
+      </div>
+
+      <!-- Кнопка AI -->
+      <button class="ai-button" onclick="App.navigate('chat')">
+        <span>🤖</span> Спросить AI-наставника
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Список уроков раздела                 -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-lessons" data-screen="lessons">
+    <div class="screen-content with-tabs">
+      <h2 class="screen-title" id="lessons-category-title">📚 Основы</h2>
+      <div class="lessons-list" id="lessons-list">
+        <!-- Заполняется из JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Урок (упражнения)                     -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-exercise" data-screen="exercise">
+    <div class="screen-content exercise-screen">
+
+      <!-- Верхняя панель: закрыть + прогресс -->
+      <div class="exercise-header">
+        <button class="exercise-close" onclick="App.exitExercise()">✕</button>
+        <div class="exercise-progress-bar">
+          <div class="exercise-progress-fill" id="exercise-progress"></div>
+        </div>
+        <span class="exercise-counter" id="exercise-counter">1/10</span>
+      </div>
+
+      <!-- Вопрос -->
+      <div class="exercise-body" id="exercise-body">
+        <!-- Заполняется из JS в зависимости от типа упражнения -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Итог урока                            -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-result" data-screen="result">
+    <div class="screen-content result-screen">
+      <div class="result-icon">🎉</div>
+      <h2 class="result-title">Урок пройден!</h2>
+      <div class="result-stats">
+        <div class="result-stat">
+          <span class="result-stat-icon">⭐</span>
+          <span class="result-stat-value" id="result-xp">+20 XP</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-stat-icon">✅</span>
+          <span class="result-stat-value" id="result-correct">8/10</span>
+        </div>
+        <div class="result-stat">
+          <span class="result-stat-icon">🔥</span>
+          <span class="result-stat-value" id="result-streak">1 день</span>
+        </div>
+      </div>
+      <h3 class="result-words-title">Новые слова:</h3>
+      <div class="result-words-list" id="result-words">
+        <!-- Заполняется из JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: AI-чат                                -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-chat" data-screen="chat">
+    <div class="screen-content chat-screen with-tabs">
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-bubble bot">
+          <div class="chat-avatar">🤖</div>
+          <div class="chat-text">Привет! Я твой AI-репетитор по китайскому. Спроси меня что угодно — объясню, приведу примеры, помогу с произношением!</div>
+        </div>
+      </div>
+
+      <!-- Быстрые подсказки -->
+      <div class="chat-chips" id="chat-chips">
+        <button class="chip" onclick="App.sendChip('Объясни тоны')">Объясни тоны</button>
+        <button class="chip" onclick="App.sendChip('Как сказать «привет»?')">Как сказать «привет»?</button>
+        <button class="chip" onclick="App.sendChip('Разница 是 и 有')">Разница 是 и 有</button>
+      </div>
+
+      <!-- Поле ввода -->
+      <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Напиши вопрос..." onkeydown="if(event.key==='Enter')App.sendMessage()">
+        <button class="chat-send" onclick="App.sendMessage()">➤</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Профиль                               -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-profile" data-screen="profile">
+    <div class="screen-content with-tabs">
+
+      <!-- Аватар и имя -->
+      <div class="profile-header">
+        <div class="profile-avatar" id="profile-avatar">👤</div>
+        <h2 class="profile-name" id="profile-name">Ученик</h2>
+      </div>
+
+      <!-- Статистика -->
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <span class="profile-stat-value" id="profile-streak">0</span>
+          <span class="profile-stat-label">🔥 Стрик</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-value" id="profile-xp">0</span>
+          <span class="profile-stat-label">⭐ XP</span>
+        </div>
+        <div class="profile-stat">
+          <span class="profile-stat-value" id="profile-words">0</span>
+          <span class="profile-stat-label">📚 Слов</span>
+        </div>
+      </div>
+
+      <!-- Прогресс по разделам -->
+      <h3 class="section-title">Прогресс</h3>
+      <div class="progress-section">
+        <div class="progress-row">
+          <span>📚 Основы</span>
+          <div class="progress-bar small"><div class="progress-fill" id="prog-basics" style="width:0%"></div></div>
+          <span class="progress-pct" id="pct-basics">0%</span>
+        </div>
+        <div class="progress-row">
+          <span>💬 Разговорный</span>
+          <div class="progress-bar small"><div class="progress-fill" id="prog-conversation" style="width:0%"></div></div>
+          <span class="progress-pct" id="pct-conversation">0%</span>
+        </div>
+        <div class="progress-row">
+          <span>📝 Грамматика</span>
+          <div class="progress-bar small"><div class="progress-fill" id="prog-grammar" style="width:0%"></div></div>
+          <span class="progress-pct" id="pct-grammar">0%</span>
+        </div>
+        <div class="progress-row">
+          <span>💼 Деловой</span>
+          <div class="progress-bar small"><div class="progress-fill" id="prog-business" style="width:0%"></div></div>
+          <span class="progress-pct" id="pct-business">0%</span>
+        </div>
+      </div>
+
+      <!-- Достижения -->
+      <h3 class="section-title">Достижения</h3>
+      <div class="achievements" id="achievements-list">
+        <div class="achievement unlocked">🏆 Первый урок</div>
+        <div class="achievement locked">🔒 3 дня подряд</div>
+        <div class="achievement locked">🔒 7 дней подряд</div>
+        <div class="achievement locked">🔒 50 слов выучено</div>
+        <div class="achievement locked">🔒 100 слов выучено</div>
+      </div>
+
+      <!-- Настройки -->
+      <button class="settings-button" onclick="App.navigate('settings')">
+        ⚙️ Настройки
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Настройки                             -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-settings" data-screen="settings">
+    <div class="screen-content">
+      <h2 class="screen-title">⚙️ Настройки</h2>
+
+      <div class="settings-group">
+        <div class="setting-row">
+          <span>Показывать пиньинь</span>
+          <label class="toggle">
+            <input type="checkbox" id="setting-pinyin" checked onchange="App.saveSetting('pinyin', this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <span>Звук произношения</span>
+          <label class="toggle">
+            <input type="checkbox" id="setting-sound" checked onchange="App.saveSetting('sound', this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <h4 class="settings-group-title">Ежедневная цель</h4>
+        <div class="goal-options">
+          <button class="goal-option" data-minutes="5" onclick="App.setDailyGoal(5, this)">5 мин</button>
+          <button class="goal-option active" data-minutes="10" onclick="App.setDailyGoal(10, this)">10 мин</button>
+          <button class="goal-option" data-minutes="15" onclick="App.setDailyGoal(15, this)">15 мин</button>
+          <button class="goal-option" data-minutes="20" onclick="App.setDailyGoal(20, this)">20 мин</button>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <h4 class="settings-group-title">Подписка</h4>
+        <div class="subscription-info">
+          <span>Тариф: <strong>Бесплатный</strong></span>
+          <button class="btn-upgrade" onclick="App.navigate('pricing')">Улучшить план</button>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <p class="settings-meta">Версия 1.0 · Репетитор по китайскому</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Тарифы                                -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-pricing" data-screen="pricing">
+    <div class="screen-content">
+      <h2 class="screen-title">Выбери свой план</h2>
+      <p class="pricing-trial">🎁 7 дней бесплатно — полный доступ</p>
+
+      <div class="pricing-cards">
+        <div class="pricing-card">
+          <h3>Базовый</h3>
+          <div class="pricing-price">690 <span>₽/мес</span></div>
+          <ul class="pricing-features">
+            <li>✓ 1 раздел на выбор</li>
+            <li>✓ AI-чат безлимит</li>
+            <li>✓ Голосовой ввод</li>
+          </ul>
+          <button class="btn-pricing" onclick="App.showPayment('basic')">Выбрать</button>
+        </div>
+        <div class="pricing-card recommended">
+          <div class="pricing-badge">Рекомендуем</div>
+          <h3>Полный</h3>
+          <div class="pricing-price">1 490 <span>₽/мес</span></div>
+          <ul class="pricing-features">
+            <li>✓ Все 4 раздела</li>
+            <li>✓ HSK 1-3</li>
+            <li>✓ Безлимит всего</li>
+            <li>✓ Отчёты прогресса</li>
+          </ul>
+          <button class="btn-pricing primary" onclick="App.showPayment('full')">Попробовать</button>
+        </div>
+        <div class="pricing-card">
+          <h3>Годовой</h3>
+          <div class="pricing-price">11 900 <span>₽/год</span></div>
+          <p class="pricing-note">= 992 ₽/мес · Экономия 34%</p>
+          <ul class="pricing-features">
+            <li>✓ Всё из «Полного»</li>
+            <li>✓ Приоритетная поддержка</li>
+          </ul>
+          <button class="btn-pricing" onclick="App.showPayment('yearly')">Выбрать</button>
+        </div>
+      </div>
+
+      <p class="pricing-free-note">Бесплатно: HSK 1 (150 слов), 5 уроков, 3 вопроса AI/день</p>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- Нижняя навигация (Tab Bar)                   -->
+  <!-- ============================================= -->
+  <nav class="tab-bar" id="tab-bar">
+    <button class="tab active" data-tab="dashboard" onclick="App.switchTab('dashboard')">
+      <span class="tab-icon">📚</span>
+      <span class="tab-label">Уроки</span>
+    </button>
+    <button class="tab" data-tab="chat" onclick="App.switchTab('chat')">
+      <span class="tab-icon">🤖</span>
+      <span class="tab-label">Чат</span>
+    </button>
+    <button class="tab" data-tab="profile" onclick="App.switchTab('profile')">
+      <span class="tab-icon">👤</span>
+      <span class="tab-label">Профиль</span>
+    </button>
+  </nav>
+
+  <!-- Confetti-контейнер -->
+  <div class="confetti-container" id="confetti-container"></div>
+
+  <!-- XP-анимация -->
+  <div class="xp-float" id="xp-float">+10 XP</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
