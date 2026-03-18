@@ -1636,50 +1636,32 @@ const App = {
 
   speak(text) {
     if (!this.state.user.settings.sound) return;
-    if (!('speechSynthesis' in window)) {
-      console.warn('Web Speech API не поддерживается');
-      return;
+
+    // Останавливаем предыдущее аудио
+    if (this._currentAudio) {
+      this._currentAudio.pause();
+      this._currentAudio = null;
     }
 
-    // Останавливаем предыдущее произношение
-    speechSynthesis.cancel();
+    // Способ 1: Google Translate TTS (работает везде, включая Telegram WebView)
+    const url = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=' + encodeURIComponent(text);
+    const audio = new Audio(url);
+    audio.playbackRate = 0.9;
+    this._currentAudio = audio;
 
-    const doSpeak = () => {
-      const voices = speechSynthesis.getVoices();
-      const zhVoice = voices.find(v =>
-        v.lang === 'zh-CN' || v.lang === 'zh_CN' ||
-        v.lang === 'zh-TW' || v.lang.startsWith('zh')
-      );
-
-      // Если китайского голоса нет — предупреждаем один раз
-      if (!zhVoice && voices.length > 0) {
-        if (!this._voiceWarningShown) {
-          this._voiceWarningShown = true;
-          this.showToast('Для произношения установите китайский язык в Параметры → Язык Windows');
-        }
+    audio.play().catch(() => {
+      // Способ 2: fallback на Web Speech API
+      if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.8;
+        const voices = speechSynthesis.getVoices();
+        const zhVoice = voices.find(v => v.lang.startsWith('zh'));
+        if (zhVoice) utterance.voice = zhVoice;
+        speechSynthesis.speak(utterance);
       }
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'zh-CN';
-      utterance.rate = 0.8;
-      if (zhVoice) utterance.voice = zhVoice;
-
-      utterance.onerror = (e) => {
-        console.warn('Ошибка произношения:', e.error);
-      };
-
-      speechSynthesis.speak(utterance);
-    };
-
-    // Голоса могут загрузиться асинхронно
-    const voices = speechSynthesis.getVoices();
-    if (voices.length === 0) {
-      speechSynthesis.onvoiceschanged = () => doSpeak();
-      // Fallback если событие не сработает
-      setTimeout(doSpeak, 300);
-    } else {
-      setTimeout(doSpeak, 50);
-    }
+    });
   },
 
   showToast(message) {
