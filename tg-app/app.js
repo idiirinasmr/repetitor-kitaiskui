@@ -1589,21 +1589,7 @@ const App = {
   // =============================================
   openStep(step) {
     this.haptic('selection');
-    if (step === 1) {
-      this.navigate('step1');
-    } else {
-      const stepNames = { 2: 'Вторая ступень (HSK 2)', 3: 'Третья ступень (HSK 3)' };
-      const msg = `${stepNames[step]} будет доступна в следующей версии. Сейчас доступна Первая ступень — HSK 1.`;
-      if (this.tg) {
-        this.tg.showPopup({
-          title: '🔒 Скоро',
-          message: msg,
-          buttons: [{ type: 'ok' }]
-        });
-      } else {
-        alert(msg);
-      }
-    }
+    this.navigate('step' + step);
   },
 
   openStepSection(sectionId) {
@@ -1611,7 +1597,15 @@ const App = {
     const names = {
       phonetics: 'Основы фонетики и грамматики',
       hieroglyphs: 'Основы иероглифики',
-      speaking: 'Основы разговорной речи'
+      speaking: 'Основы разговорной речи',
+      hieroglyphs2: 'Иероглифика',
+      speaking2: 'Разговорный',
+      reading2: 'Чтение',
+      grammar3: 'Грамматика',
+      speaking3: 'Разговорный',
+      reading3: 'Чтение',
+      translation3: 'Перевод',
+      business3: 'Китайский для делового общения'
     };
     const msg = `Раздел «${names[sectionId]}» готовится. Уроки появятся в ближайшем обновлении!`;
     if (this.tg) {

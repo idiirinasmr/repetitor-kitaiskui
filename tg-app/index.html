@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 
@@ -251,22 +251,22 @@
           <span class="step-arrow">→</span>
         </button>
 
-        <button class="step-card locked" onclick="App.openStep(2)">
+        <button class="step-card" onclick="App.openStep(2)">
           <div class="step-number">2</div>
           <div class="step-info">
             <strong>Вторая ступень</strong>
             <span>HSK 2 · 300 слов · Простые диалоги</span>
           </div>
-          <span class="step-lock">🔒</span>
+          <span class="step-arrow">→</span>
         </button>
 
-        <button class="step-card locked" onclick="App.openStep(3)">
+        <button class="step-card" onclick="App.openStep(3)">
           <div class="step-number">3</div>
           <div class="step-info">
             <strong>Третья ступень</strong>
             <span>HSK 3 · 600 слов · Свободное общение</span>
           </div>
-          <span class="step-lock">🔒</span>
+          <span class="step-arrow">→</span>
         </button>
       </div>
     </div>
@@ -278,8 +278,6 @@
   <div class="screen" id="screen-step1" data-screen="step1">
     <div class="screen-content with-tabs">
       <h2 class="screen-title">📖 Первая ступень</h2>
-      <p class="deep-study-subtitle">HSK 1 · 150 слов · Базовые фразы</p>
-
       <div class="step-sections">
         <button class="step-section-card" onclick="App.openStepSection('phonetics')">
           <span class="step-section-icon">🗣</span>
@@ -304,6 +302,100 @@
           <div class="step-section-info">
             <strong>Основы разговорной речи</strong>
             <span>Приветствия, вопросы, базовые диалоги</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Вторая ступень                        -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-step2" data-screen="step2">
+    <div class="screen-content with-tabs">
+      <h2 class="screen-title">📖 Вторая ступень</h2>
+
+      <div class="step-sections">
+        <button class="step-section-card" onclick="App.openStepSection('hieroglyphs2')">
+          <span class="step-section-icon">✍️</span>
+          <div class="step-section-info">
+            <strong>Иероглифика</strong>
+            <span>Составные иероглифы, радикалы</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('speaking2')">
+          <span class="step-section-icon">💬</span>
+          <div class="step-section-info">
+            <strong>Разговорный</strong>
+            <span>Диалоги, ситуации, фразы</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('reading2')">
+          <span class="step-section-icon">📖</span>
+          <div class="step-section-info">
+            <strong>Чтение</strong>
+            <span>Простые тексты и рассказы</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Третья ступень                        -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-step3" data-screen="step3">
+    <div class="screen-content with-tabs">
+      <h2 class="screen-title">📖 Третья ступень</h2>
+
+      <div class="step-sections">
+        <button class="step-section-card" onclick="App.openStepSection('grammar3')">
+          <span class="step-section-icon">📝</span>
+          <div class="step-section-info">
+            <strong>Грамматика</strong>
+            <span>Сложные конструкции и обороты</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('speaking3')">
+          <span class="step-section-icon">💬</span>
+          <div class="step-section-info">
+            <strong>Разговорный</strong>
+            <span>Свободное общение, дискуссии</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('reading3')">
+          <span class="step-section-icon">📖</span>
+          <div class="step-section-info">
+            <strong>Чтение</strong>
+            <span>Статьи, новости, литература</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('translation3')">
+          <span class="step-section-icon">🔄</span>
+          <div class="step-section-info">
+            <strong>Перевод</strong>
+            <span>Русско-китайский, китайско-русский</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('business3')">
+          <span class="step-section-icon">💼</span>
+          <div class="step-section-info">
+            <strong>Китайский для делового общения</strong>
+            <span>Переговоры, переписка, презентации</span>
           </div>
           <span class="step-section-status">Скоро</span>
         </button>
@@ -596,6 +688,6 @@
   <!-- XP-анимация -->
   <div class="xp-float" id="xp-float">+10 XP</div>
 
-  <script src="app.js?v=13"></script>
+  <script src="app.js?v=14"></script>
 </body>
 </html>
