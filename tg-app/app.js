@@ -1585,6 +1585,28 @@ const App = {
   },
 
   // =============================================
+  // УГЛУБЛЁННОЕ ИЗУЧЕНИЕ (ступени)
+  // =============================================
+  openStep(step) {
+    this.haptic('selection');
+    if (step === 1) {
+      // Первая ступень = HSK 1 — все 4 раздела
+      this.navigate('dashboard');
+    } else {
+      const stepNames = { 2: 'Вторая ступень (HSK 2)', 3: 'Третья ступень (HSK 3)' };
+      const msg = `${stepNames[step]} будет доступна в следующей версии. Сейчас доступна Первая ступень — HSK 1.`;
+      if (this.tg) {
+        this.tg.showPopup({
+          title: '🔒 Скоро',
+          message: msg,
+          buttons: [{ type: 'ok' }]
+        });
+      } else {
+        alert(msg);
+      }
+    }
+  },
+
   // ТАРИФЫ (заглушка)
   // =============================================
   showPayment(plan) {
