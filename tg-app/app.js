@@ -1590,8 +1590,7 @@ const App = {
   openStep(step) {
     this.haptic('selection');
     if (step === 1) {
-      // Первая ступень = HSK 1 — все 4 раздела
-      this.navigate('dashboard');
+      this.navigate('step1');
     } else {
       const stepNames = { 2: 'Вторая ступень (HSK 2)', 3: 'Третья ступень (HSK 3)' };
       const msg = `${stepNames[step]} будет доступна в следующей версии. Сейчас доступна Первая ступень — HSK 1.`;
@@ -1604,6 +1603,25 @@ const App = {
       } else {
         alert(msg);
       }
+    }
+  },
+
+  openStepSection(sectionId) {
+    this.haptic('selection');
+    const names = {
+      phonetics: 'Основы фонетики и грамматики',
+      hieroglyphs: 'Основы иероглифики',
+      speaking: 'Основы разговорной речи'
+    };
+    const msg = `Раздел «${names[sectionId]}» готовится. Уроки появятся в ближайшем обновлении!`;
+    if (this.tg) {
+      this.tg.showPopup({
+        title: '📚 Скоро',
+        message: msg,
+        buttons: [{ type: 'ok' }]
+      });
+    } else {
+      alert(msg);
     }
   },
 

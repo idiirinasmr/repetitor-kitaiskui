@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
@@ -267,6 +267,45 @@
             <span>HSK 3 · 600 слов · Свободное общение</span>
           </div>
           <span class="step-lock">🔒</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Первая ступень                        -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-step1" data-screen="step1">
+    <div class="screen-content with-tabs">
+      <h2 class="screen-title">📖 Первая ступень</h2>
+      <p class="deep-study-subtitle">HSK 1 · 150 слов · Базовые фразы</p>
+
+      <div class="step-sections">
+        <button class="step-section-card" onclick="App.openStepSection('phonetics')">
+          <span class="step-section-icon">🗣</span>
+          <div class="step-section-info">
+            <strong>Основы фонетики и грамматики</strong>
+            <span>Тоны, пиньинь, структура предложений</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('hieroglyphs')">
+          <span class="step-section-icon">✍️</span>
+          <div class="step-section-info">
+            <strong>Основы иероглифики</strong>
+            <span>Ключи, черты, порядок написания</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
+        </button>
+
+        <button class="step-section-card" onclick="App.openStepSection('speaking')">
+          <span class="step-section-icon">💬</span>
+          <div class="step-section-info">
+            <strong>Основы разговорной речи</strong>
+            <span>Приветствия, вопросы, базовые диалоги</span>
+          </div>
+          <span class="step-section-status">Скоро</span>
         </button>
       </div>
     </div>
@@ -557,6 +596,6 @@
   <!-- XP-анимация -->
   <div class="xp-float" id="xp-float">+10 XP</div>
 
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>

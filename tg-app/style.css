@@ -1745,3 +1745,63 @@ button, .option-card, .exercise-option, .match-item, .tab, .chip {
 .step-lock {
   font-size: 18px;
 }
+
+/* --- Подразделы ступени --- */
+.step-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step-section-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 16px;
+  background: var(--card-bg);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+  color: var(--text);
+  width: 100%;
+  text-align: left;
+}
+
+.step-section-card:active {
+  transform: scale(0.98);
+  background: color-mix(in srgb, var(--accent) 8%, var(--card-bg));
+}
+
+.step-section-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.step-section-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.step-section-info strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.step-section-info span {
+  font-size: 12px;
+  color: var(--text-hint);
+}
+
+.step-section-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-hint);
+  background: var(--bg);
+  padding: 4px 10px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
