@@ -3,6 +3,38 @@
 // Главный файл: навигация, экраны, упражнения, чат
 // ===================================================
 
+// Медали пробного периода
+const BADGES = [
+  {
+    id: 'first_lesson',
+    emoji: '🌱',
+    name: 'Первый иероглиф',
+    desc: 'Первый урок пройден — путь начат!',
+    check: (u) => u.completedLessons.length >= 1,
+  },
+  {
+    id: 'streak3',
+    emoji: '🔥',
+    name: 'Неостановимый',
+    desc: '3 дня занятий подряд — так держать!',
+    check: (u) => u.streak >= 3,
+  },
+  {
+    id: 'five_lessons',
+    emoji: '📚',
+    name: 'Любознательный',
+    desc: '5 уроков пройдено — ты уже знаешь основы!',
+    check: (u) => u.completedLessons.length >= 5,
+  },
+  {
+    id: 'ten_words',
+    emoji: '🀄',
+    name: 'Собиратель слов',
+    desc: 'Первые 10 иероглифов в копилке!',
+    check: (u) => u.wordsLearned.length >= 10,
+  },
+];
+
 const App = {
   // --- Состояние приложения ---
   state: {
@@ -21,6 +53,8 @@ const App = {
       completedLessons: [],     // id пройденных уроков
       currentLesson: 1,         // id текущего урока
       lastActiveDate: null,
+      earnedBadges: [],         // id полученных медалей
+      trialCompleteSeen: false, // показан ли экран "пробный период пройден"
       settings: {
         pinyin: true,
         sound: true,
@@ -1366,6 +1400,9 @@ const App = {
     // Сохраняем
     this.saveProgress();
 
+    // Проверяем новые достижения
+    this.checkBadges();
+
     // Показываем результат
     document.getElementById('result-xp').textContent = `+${xpEarned} XP`;
     document.getElementById('result-correct').textContent = `${correctCount}/${total}`;
@@ -1442,21 +1479,21 @@ const App = {
       if (pctLabel) pctLabel.textContent = `${pct}%`;
     });
 
-    // Достижения
+    // Достижения — медали пробного периода + дополнительные
     const achievements = document.getElementById('achievements-list');
     const checks = [
-      { name: 'Первый урок', done: user.completedLessons.length > 0 },
-      { name: '3 дня подряд', done: user.streak >= 3 },
-      { name: '7 дней подряд', done: user.streak >= 7 },
-      { name: '30 дней подряд', done: user.streak >= 30 },
-      { name: '10 слов выучено', done: user.wordsLearned.length >= 10 },
-      { name: '50 слов выучено', done: user.wordsLearned.length >= 50 },
-      { name: '100 слов выучено', done: user.wordsLearned.length >= 100 },
-      { name: '150 слов (HSK 1)', done: user.wordsLearned.length >= 150 }
+      ...BADGES.map(b => ({
+        name: `${b.emoji} ${b.name}`,
+        done: (user.earnedBadges || []).includes(b.id)
+      })),
+      { name: '🔥 7 дней подряд',      done: user.streak >= 7 },
+      { name: '📖 50 слов выучено',     done: user.wordsLearned.length >= 50 },
+      { name: '🏆 100 слов выучено',    done: user.wordsLearned.length >= 100 },
+      { name: '🎓 150 слов (HSK 1)',    done: user.wordsLearned.length >= 150 },
     ];
 
     achievements.innerHTML = checks.map(a =>
-      `<div class="achievement ${a.done ? 'unlocked' : 'locked'}">${a.done ? '🏆' : '🔒'} ${a.name}</div>`
+      `<div class="achievement ${a.done ? 'unlocked' : 'locked'}">${a.done ? '' : '🔒 '}${a.name}</div>`
     ).join('');
   },
 
@@ -1853,7 +1890,97 @@ const App = {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
-  }
+  },
+
+  // =============================================
+  // МЕДАЛИ И ДОСТИЖЕНИЯ
+  // =============================================
+
+  // Проверяем все BADGES — показываем новые и при 5 уроках — экран trial-complete
+  checkBadges() {
+    const user = this.state.user;
+    if (!user.earnedBadges) user.earnedBadges = [];
+
+    const newBadges = [];
+    BADGES.forEach(badge => {
+      if (!user.earnedBadges.includes(badge.id) && badge.check(user)) {
+        user.earnedBadges.push(badge.id);
+        newBadges.push(badge);
+      }
+    });
+
+    if (newBadges.length) {
+      this.saveProgress();
+      this.showBadgePopupQueue(newBadges, 0);
+    }
+
+    // После 5 уроков — один раз показываем экран итогов пробного периода
+    const totalDelay = newBadges.length * 3400 + 600;
+    if (user.completedLessons.length >= 5 && !user.trialCompleteSeen) {
+      user.trialCompleteSeen = true;
+      this.saveProgress();
+      setTimeout(() => this.showTrialComplete(), totalDelay);
+    }
+  },
+
+  // Показываем медали по очереди
+  showBadgePopupQueue(badges, index) {
+    if (index >= badges.length) return;
+    this.showBadgePopup(badges[index], () => {
+      setTimeout(() => this.showBadgePopupQueue(badges, index + 1), 350);
+    });
+  },
+
+  // Показываем один попап с медалью
+  showBadgePopup(badge, onClose) {
+    const popup = document.getElementById('badge-popup');
+    document.getElementById('badge-popup-emoji').textContent = badge.emoji;
+    document.getElementById('badge-popup-name').textContent  = badge.name;
+    document.getElementById('badge-popup-desc').textContent  = badge.desc;
+    popup.style.display = 'flex';
+    popup.classList.remove('badge-popup-hide');
+    popup.classList.add('badge-popup-show');
+    this.haptic('success');
+    popup._onClose = onClose || null;
+    this._badgeTimer = setTimeout(() => this.closeBadgePopup(), 3200);
+  },
+
+  // Закрываем попап медали (по таймеру или клику)
+  closeBadgePopup(cb) {
+    clearTimeout(this._badgeTimer);
+    const popup = document.getElementById('badge-popup');
+    if (!popup || popup.style.display === 'none') return;
+    popup.classList.remove('badge-popup-show');
+    popup.classList.add('badge-popup-hide');
+    setTimeout(() => {
+      popup.style.display = 'none';
+      popup.classList.remove('badge-popup-hide');
+      const fn = typeof cb === 'function' ? cb : popup._onClose;
+      popup._onClose = null;
+      if (typeof fn === 'function') fn();
+    }, 380);
+  },
+
+  // Экран: пробный период пройден
+  showTrialComplete() {
+    const user = this.state.user;
+    const earned = BADGES.filter(b => (user.earnedBadges || []).includes(b.id));
+    const badgesEl = document.getElementById('trial-badges');
+    if (badgesEl) {
+      badgesEl.innerHTML = earned.length
+        ? earned.map(b =>
+            `<div class="trial-badge">
+               <span class="trial-badge-emoji">${b.emoji}</span>
+               <span class="trial-badge-name">${b.name}</span>
+             </div>`
+          ).join('')
+        : `<p class="trial-no-badges">Продолжай — медали ждут!</p>`;
+    }
+    const xpEl = document.getElementById('trial-xp');
+    if (xpEl) xpEl.textContent = `⭐ ${user.xp} XP накоплено`;
+    this.navigate('trial-complete');
+    this.showConfetti();
+  },
 };
 
 // =============================================

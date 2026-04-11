@@ -729,6 +729,46 @@
   <!-- XP-анимация -->
   <div class="xp-float" id="xp-float">+10 XP</div>
 
+  <!-- ============================================= -->
+  <!-- Попап: Новое достижение                       -->
+  <!-- ============================================= -->
+  <div id="badge-popup" class="badge-popup-overlay" style="display:none" onclick="App.closeBadgePopup()">
+    <div class="badge-popup-box">
+      <div class="badge-popup-shine"></div>
+      <div class="badge-popup-new">Новое достижение!</div>
+      <div class="badge-popup-emoji" id="badge-popup-emoji">🌱</div>
+      <div class="badge-popup-name" id="badge-popup-name">Первый иероглиф</div>
+      <div class="badge-popup-desc" id="badge-popup-desc">Первый урок пройден!</div>
+      <div class="badge-popup-tap">Нажмите, чтобы продолжить</div>
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Пробный период пройден                 -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-trial-complete" data-screen="trial-complete">
+    <div class="screen-content trial-complete-content">
+      <div class="trial-complete-dragon">🐉</div>
+      <h2 class="trial-complete-title">Пробный период<br>пройден!</h2>
+      <p class="trial-complete-sub">Ты доказал себе — китайский тебе по силам.</p>
+
+      <div class="trial-badges-wrap">
+        <div class="trial-badges-title">Твои медали</div>
+        <div class="trial-badges" id="trial-badges"></div>
+      </div>
+
+      <div class="trial-xp-wrap" id="trial-xp">⭐ 0 XP накоплено</div>
+
+      <div class="trial-next">
+        <p class="trial-next-text">Продолжи путь</p>
+        <p class="trial-next-hint">Ступень 1 открывается после оплаты</p>
+        <button class="btn-trial-pay" onclick="App.navigate('payment')">💳 Открыть Ступень 1</button>
+      </div>
+
+      <button class="btn-trial-home" onclick="App.navigate('dashboard')">← На главную</button>
+    </div>
+  </div>
+
   <script src="app.js?v=14"></script>
   <script>
     const PAYMENT_LABELS = {
