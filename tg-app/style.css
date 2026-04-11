@@ -1659,6 +1659,109 @@ button, .option-card, .exercise-option, .match-item, .tab, .chip {
   box-shadow: 0 1px 4px rgba(102, 126, 234, 0.2);
 }
 
+/* --- Кнопка «Перейти к оплате» --- */
+.payment-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 10px;
+  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.3);
+}
+.payment-button:active { transform: scale(0.98); }
+
+/* --- Экран оплаты --- */
+.payment-subtitle {
+  font-size: 15px;
+  color: var(--text-hint);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.payment-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.payment-option-btn {
+  padding: 14px 10px;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+}
+.payment-option-btn:active,
+.payment-option-btn.selected {
+  border-color: #16a34a;
+  background: rgba(22,163,74,0.08);
+}
+.payment-details {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-top: 8px;
+}
+.payment-selected-label {
+  font-size: 14px;
+  color: var(--text-hint);
+  margin-bottom: 14px;
+  text-align: center;
+}
+.payment-card {
+  background: #fff;
+  border: 1.5px solid #d1fae5;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+}
+.payment-card-bank {
+  font-size: 12px;
+  font-weight: 700;
+  color: #16a34a;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.payment-card-number {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--text);
+  cursor: pointer;
+  user-select: all;
+}
+.copy-hint {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text-hint);
+  margin-top: 4px;
+}
+.payment-instruction {
+  font-size: 13px;
+  color: var(--text-hint);
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
 /* --- Экран «Углублённое изучение» --- */
 .deep-study-subtitle {
   font-size: 14px;

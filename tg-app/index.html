@@ -233,6 +233,47 @@
         <span>🎓</span> Углублённое изучение
       </button>
 
+      <!-- Кнопка оплаты -->
+      <button class="payment-button" onclick="App.navigate('payment')">
+        <span>💳</span> Перейти к оплате
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ============================================= -->
+  <!-- ЭКРАН: Оплата                                -->
+  <!-- ============================================= -->
+  <div class="screen" id="screen-payment" data-screen="payment">
+    <div class="screen-header">
+      <button class="back-btn" onclick="App.navigate('dashboard')">← Назад</button>
+      <h1 class="screen-title-top">💳 Оплата</h1>
+    </div>
+    <div class="screen-content">
+      <p class="payment-subtitle">Выберите, что хотите оплатить:</p>
+
+      <div class="payment-options">
+        <button class="payment-option-btn" onclick="showPaymentDetails('subscription')">📅 Подписку</button>
+        <button class="payment-option-btn" onclick="showPaymentDetails('lessons')">📖 Уроки</button>
+        <button class="payment-option-btn" onclick="showPaymentDetails('step1')">1️⃣ Ступень 1</button>
+        <button class="payment-option-btn" onclick="showPaymentDetails('step2')">2️⃣ Ступень 2</button>
+        <button class="payment-option-btn" onclick="showPaymentDetails('step3')">3️⃣ Ступень 3</button>
+        <button class="payment-option-btn" onclick="showPaymentDetails('fullcourse')">🎓 Весь курс</button>
+      </div>
+
+      <!-- Блок с реквизитами — скрыт до выбора -->
+      <div class="payment-details" id="payment-details" style="display:none;">
+        <div class="payment-selected-label" id="payment-selected-label"></div>
+        <div class="payment-card">
+          <div class="payment-card-bank">Т-Банк</div>
+          <div class="payment-card-number" onclick="copyText('5536 9137 5334 5129', this)">5536 9137 5334 5129 <span class="copy-hint">нажмите чтобы скопировать</span></div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-card-bank">ВТБ</div>
+          <div class="payment-card-number" onclick="copyText('2200 4808 0590 0341', this)">2200 4808 0590 0341 <span class="copy-hint">нажмите чтобы скопировать</span></div>
+        </div>
+        <p class="payment-instruction">После оплаты пришлите скриншот боту <strong>@KitaiskuiBot</strong> и напишите <strong>/paid</strong></p>
+      </div>
     </div>
   </div>
 
@@ -689,5 +730,39 @@
   <div class="xp-float" id="xp-float">+10 XP</div>
 
   <script src="app.js?v=14"></script>
+  <script>
+    const PAYMENT_LABELS = {
+      subscription: 'Подписку',
+      lessons:      'Уроки',
+      step1:        'Ступень 1',
+      step2:        'Ступень 2',
+      step3:        'Ступень 3',
+      fullcourse:   'Весь курс',
+    };
+
+    function showPaymentDetails(product) {
+      // Снять выделение со всех кнопок
+      document.querySelectorAll('.payment-option-btn').forEach(b => b.classList.remove('selected'));
+      // Выделить нажатую
+      event.target.classList.add('selected');
+
+      const label = PAYMENT_LABELS[product] || product;
+      document.getElementById('payment-selected-label').textContent = 'Вы выбрали: ' + label;
+
+      const details = document.getElementById('payment-details');
+      details.style.display = 'block';
+      details.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function copyText(text, el) {
+      navigator.clipboard.writeText(text).then(() => {
+        const hint = el.querySelector('.copy-hint');
+        if (hint) {
+          hint.textContent = '✅ Скопировано!';
+          setTimeout(() => { hint.textContent = 'нажмите чтобы скопировать'; }, 2000);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
