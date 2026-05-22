@@ -4,3 +4,4 @@ node_modules/
 .env
 *.log
 bot/google-credentials.json
+bot/data.json

@@ -9,27 +9,52 @@ import {
   createPayment, createHomework,
 } from '../db.js';
 
-const PRICES = {
-  step1: { amount: 1990, label: 'Первая ступень' },
-  step2: { amount: 2490, label: 'Вторая ступень' },
-  step3: { amount: 2990, label: 'Третья ступень' },
-};
+const ADMIN_ID = process.env.ADMIN_TELEGRAM_ID;
 
-const CARD_NUMBER = process.env.CARD_NUMBER || '1234 5678 9012 3456';
-const CARD_OWNER  = process.env.CARD_OWNER  || 'Ирина А.';
-const ADMIN_ID    = process.env.ADMIN_TELEGRAM_ID;
+function formatCard(raw) {
+  const digits = String(raw || '').replace(/\s/g, '');
+  return digits.replace(/(.{4})/g, '$1 ').trim();
+}
+
+function getCardTbank() { return formatCard(process.env.CARD_TBANK); }
+function getCardVtb()   { return formatCard(process.env.CARD_VTB);   }
 
 export function registerStudentCommands(bot) {
 
   // /start — регистрация и запуск Mini App
+  // Поддерживает deep link: /start pay_step1, /start pay_step2 и т.д.
   bot.command('start', async (ctx) => {
     const telegramId = ctx.from.id;
     const username   = ctx.from.username || '';
     const firstName  = ctx.from.first_name || 'Ученик';
+    const param      = ctx.match?.trim() || ''; // аргумент после /start
 
     const user = getUser(telegramId);
     if (!user) {
       createUser({ telegram_id: telegramId, username, first_name: firstName, role: 'student' });
+    }
+
+    // Deep link из Mini App: пользователь выбрал продукт → бот показывает реквизиты
+    if (param.startsWith('pay_')) {
+      const product = param.replace('pay_', '');
+      const labels  = {
+        subscription: 'Подписку',
+        lessons:      'Уроки',
+        step1:        'Ступень 1',
+        step2:        'Ступень 2',
+        step3:        'Ступень 3',
+        fullcourse:   'Весь курс',
+      };
+      const label = labels[product] || product;
+
+      return ctx.reply(
+        `💳 Реквизиты для оплаты — ${label}:\n\n` +
+        `Т-Банк:\n<code>${getCardTbank()}</code>\n\n` +
+        `ВТБ:\n<code>${getCardVtb()}</code>\n\n` +
+        `После оплаты напишите /paid и пришлите скриншот.\n` +
+        `Доступ откроется в течение нескольких часов.`,
+        { parse_mode: 'HTML' }
+      );
     }
 
     const appUrl = process.env.MINI_APP_URL || 'https://repetitor-kitaiskui.vercel.app';
@@ -38,9 +63,10 @@ export function registerStudentCommands(bot) {
       `Привет, ${firstName}! 👋\n\nЯ помогу тебе выучить китайский язык.\n\nНажми кнопку ниже, чтобы начать занятия:`,
       {
         reply_markup: {
-          inline_keyboard: [[
-            { text: '📚 Начать заниматься', web_app: { url: appUrl } },
-          ]],
+          inline_keyboard: [
+            [{ text: '📚 Начать заниматься', web_app: { url: appUrl } }],
+            [{ text: '💳 Перейти к оплате', callback_data: 'show_payment_menu' }],
+          ],
         },
       }
     );
@@ -83,27 +109,101 @@ export function registerStudentCommands(bot) {
     );
   });
 
-  // /buy — купить доступ к ступени
+  // /buy — меню оплаты
   bot.command('buy', async (ctx) => {
-    const args    = ctx.message.text.split(' ').slice(1);
-    const product = args[0];
-
-    if (!product || !PRICES[product]) {
-      const list = Object.entries(PRICES)
-        .map(([key, val]) => `• /buy ${key} — ${val.label}: ${val.amount} ₽`)
-        .join('\n');
-      return ctx.reply(`Выберите ступень:\n\n${list}`);
-    }
-
-    const price = PRICES[product];
-    createPayment({ telegram_id: ctx.from.id, amount: price.amount, product, method: 'manual' });
-
     await ctx.reply(
-      `💳 Оплата ${price.label}\n\n` +
-      `Сумма: ${price.amount} ₽\n\n` +
-      `Переведите на карту:\n` +
-      `<code>${CARD_NUMBER}</code>\n` +
-      `Получатель: ${CARD_OWNER}\n\n` +
+      `💳 Что хотите оплатить?`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '📅 Подписку',   callback_data: 'buy_subscription' },
+              { text: '📖 Уроки',      callback_data: 'buy_lessons' },
+            ],
+            [
+              { text: '1️⃣ Ступень 1', callback_data: 'buy_step1' },
+              { text: '2️⃣ Ступень 2', callback_data: 'buy_step2' },
+            ],
+            [
+              { text: '3️⃣ Ступень 3', callback_data: 'buy_step3' },
+              { text: '🎓 Весь курс', callback_data: 'buy_fullcourse' },
+            ],
+          ],
+        },
+      }
+    );
+  });
+
+  // Показать меню оплаты по кнопке из /start
+  bot.callbackQuery('show_payment_menu', async (ctx) => {
+    await ctx.answerCallbackQuery();
+    await ctx.reply(
+      `💳 Что хотите оплатить?`,
+      {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: '📅 Подписку',   callback_data: 'buy_subscription' },
+              { text: '📖 Уроки',      callback_data: 'buy_lessons' },
+            ],
+            [
+              { text: '1️⃣ Ступень 1', callback_data: 'buy_step1' },
+              { text: '2️⃣ Ступень 2', callback_data: 'buy_step2' },
+            ],
+            [
+              { text: '3️⃣ Ступень 3', callback_data: 'buy_step3' },
+              { text: '🎓 Весь курс', callback_data: 'buy_fullcourse' },
+            ],
+          ],
+        },
+      }
+    );
+  });
+
+  // Выбор продукта → кнопка "Оплатить"
+  bot.callbackQuery(/^buy_(\w+)$/, async (ctx) => {
+    const product = ctx.match[1];
+    const label   = {
+      subscription: 'Подписку',
+      lessons:      'Уроки',
+      step1:        'Ступень 1',
+      step2:        'Ступень 2',
+      step3:        'Ступень 3',
+      fullcourse:   'Весь курс',
+    }[product] || product;
+
+    createPayment({ telegram_id: ctx.from.id, amount: 0, product, method: 'manual' });
+
+    await ctx.answerCallbackQuery();
+    await ctx.reply(
+      `Вы выбрали: ${label}\n\nНажмите кнопку для получения реквизитов:`,
+      {
+        reply_markup: {
+          inline_keyboard: [[
+            { text: '💳 Оплатить', callback_data: `pay_details_${product}` },
+          ]],
+        },
+      }
+    );
+  });
+
+  // Показать реквизиты карт
+  bot.callbackQuery(/^pay_details_(\w+)$/, async (ctx) => {
+    const product = ctx.match[1];
+    const label   = {
+      subscription: 'Подписку',
+      lessons:      'Уроки',
+      step1:        'Ступень 1',
+      step2:        'Ступень 2',
+      step3:        'Ступень 3',
+      fullcourse:   'Весь курс',
+    }[product] || product;
+
+    await ctx.answerCallbackQuery();
+    await ctx.reply(
+      `💳 Реквизиты для оплаты — ${label}:\n\n` +
+      `Т-Банк:\n<code>${getCardTbank()}</code>\n\n` +
+      `ВТБ:\n<code>${getCardVtb()}</code>\n\n` +
       `После оплаты напишите /paid и пришлите скриншот.\n` +
       `Доступ откроется в течение нескольких часов.`,
       { parse_mode: 'HTML' }
@@ -122,15 +222,15 @@ export function registerStudentCommands(bot) {
       p => String(p.telegram_id) === String(telegramId) && p.status === 'pending'
     );
     const product  = lastPayment?.product  || 'step1';
-    const amount   = lastPayment?.amount   || '?';
-    const label    = PRICES[product]?.label || 'Ступень';
+    const labels   = { subscription: 'Подписка', lessons: 'Уроки', step1: 'Ступень 1', step2: 'Ступень 2', step3: 'Ступень 3', fullcourse: 'Весь курс' };
+    const label    = labels[product] || product;
 
     await ctx.reply(`✅ Принято! Пришлите скриншот оплаты — проверим и откроем доступ.`);
 
     if (ADMIN_ID) {
       await ctx.api.sendMessage(
         ADMIN_ID,
-        `💰 Ученик ${username} оплатил ${label} (${amount} ₽)\n\n` +
+        `💰 Ученик ${username} оплатил: ${label}\n\n` +
         `Проверьте перевод на карте и нажмите кнопку:`,
         {
           reply_markup: {
@@ -190,9 +290,7 @@ export function registerStudentCommands(bot) {
       `/start — открыть приложение\n` +
       `/progress — ваш прогресс\n` +
       `/homework — как сдать ДЗ\n` +
-      `/buy step1 — купить Первую ступень\n` +
-      `/buy step2 — купить Вторую ступень\n` +
-      `/buy step3 — купить Третью ступень\n` +
+      `/buy — перейти к оплате\n` +
       `/paid — сообщить об оплате\n` +
       `/help — эта справка`
     );

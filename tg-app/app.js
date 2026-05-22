@@ -55,11 +55,20 @@ const App = {
       lastActiveDate: null,
       earnedBadges: [],         // id полученных медалей
       trialCompleteSeen: false, // показан ли экран "пробный период пройден"
+      allDoneSeen: false,       // показан ли экран "все уроки пройдены"
+      inProgressLesson: null,   // { lessonId, currentIndex, correctCount } — незавершённый урок
+      wordReviews: {},          // { [wordId]: { nextReview: ISO, interval: days } }
       settings: {
         pinyin: true,
         sound: true,
         dailyGoal: 10
       }
+    },
+    // Сессия повторения слов (SRS)
+    review: {
+      words: [],
+      index: 0,
+      correct: 0,
     },
     // Текущее упражнение
     exercise: {
@@ -133,8 +142,9 @@ const App = {
       // Загружаем данные
       await this.loadData();
 
-      // Загружаем сохранённый прогресс
-      this.loadProgress();
+      // Ждём загрузки прогресса — CloudStorage авторитетнее localStorage,
+      // поэтому навигировать можно только после того как оба источника прочитаны.
+      await this.loadProgress();
 
       // Фиксируем дату начала пробного периода (при первом входе)
       if (!this.state.user.trialStartDate) {
@@ -162,8 +172,14 @@ const App = {
       }
     } catch (e) {
       console.error('Ошибка инициализации:', e);
-      // Показываем welcome-экран даже при ошибке
       this.navigate('welcome');
+    } finally {
+      // Скрываем экран загрузки после завершения init
+      const ls = document.getElementById('loading-screen');
+      if (ls) {
+        ls.style.opacity = '0';
+        setTimeout(() => ls.remove(), 350);
+      }
     }
   },
 
@@ -922,6 +938,33 @@ const App = {
       }
     });
 
+    // Кнопка повторения слов (SRS) — если есть слова на сегодня
+    const dueCount = this.getDueWords().length;
+    let reviewBtn = document.getElementById('dash-review-btn');
+    if (dueCount > 0) {
+      if (!reviewBtn) {
+        reviewBtn = document.createElement('button');
+        reviewBtn.id = 'dash-review-btn';
+        reviewBtn.className = 'review-button';
+        reviewBtn.onclick = () => { this.startReview(); this.haptic('selection'); };
+        const aiBtn = document.querySelector('#screen-dashboard .ai-button');
+        if (aiBtn) aiBtn.parentNode.insertBefore(reviewBtn, aiBtn);
+      }
+      reviewBtn.style.display = 'flex';
+      reviewBtn.innerHTML = `<span>🔁</span> Повторить слова <span class="review-button-badge">${dueCount}</span>`;
+    } else if (reviewBtn) {
+      reviewBtn.style.display = 'none';
+    }
+
+    // Проверяем «все уроки пройдены» — показываем один раз
+    if (
+      this.data.lessons.length > 0 &&
+      this.state.user.completedLessons.length >= this.data.lessons.length &&
+      !this.state.user.allDoneSeen
+    ) {
+      setTimeout(() => this.showAllDone(), 400);
+    }
+
     // Показываем статус пробного периода
     let trialBadge = document.getElementById('trial-badge');
     if (!trialBadge) {
@@ -948,6 +991,13 @@ const App = {
   continueLesson() {
     const lessonId = this.state.user.currentLesson;
     this.startLesson(lessonId);
+  },
+
+  // Сохраняет текущую позицию в уроке для возможности продолжить позже
+  _saveInProgressLesson() {
+    const { lessonId, currentIndex, correctCount } = this.state.exercise;
+    this.state.user.inProgressLesson = { lessonId, currentIndex, correctCount };
+    this.saveProgress();
   },
 
   // =============================================
@@ -1037,11 +1087,17 @@ const App = {
 
     this.haptic('impact');
 
+    // Восстанавливаем позицию если пользователь выходил из этого урока раньше
+    const saved      = this.state.user.inProgressLesson;
+    const canResume  = saved?.lessonId === lessonId && saved.currentIndex > 0;
+    const startIndex = canResume ? saved.currentIndex   : 0;
+    const startScore = canResume ? (saved.correctCount || 0) : 0;
+
     this.state.exercise = {
-      lessonId: lessonId,
-      exercises: [...lesson.exercises],
-      currentIndex: 0,
-      correctCount: 0,
+      lessonId,
+      exercises:    [...lesson.exercises],
+      currentIndex: startIndex,
+      correctCount: startScore,
       selectedAnswer: null,
       answered: false,
       lessonData: lesson
@@ -1049,6 +1105,12 @@ const App = {
 
     this.navigate('exercise');
     this.renderExercise();
+
+    if (canResume) {
+      setTimeout(() => {
+        this.showToast(`Продолжаем с вопроса ${startIndex + 1}/${lesson.exercises.length}`);
+      }, 500);
+    }
   },
 
   renderExercise() {
@@ -1363,12 +1425,16 @@ const App = {
     if (this.state.exercise.currentIndex >= this.state.exercise.exercises.length) {
       this.finishLesson();
     } else {
+      this._saveInProgressLesson(); // сохраняем новую позицию до рендера
       this.renderExercise();
     }
   },
 
   // --- Завершение урока ---
   finishLesson() {
+    // Урок пройден — промежуточный прогресс больше не нужен
+    this.state.user.inProgressLesson = null;
+
     const { lessonId, correctCount, exercises, lessonData } = this.state.exercise;
     const total = exercises.length;
     const xpEarned = lessonData.xpReward;
@@ -1379,11 +1445,17 @@ const App = {
     }
     this.state.user.xp += xpEarned;
 
-    // Добавляем выученные слова
+    // Добавляем выученные слова и планируем повторение
     const wordIds = lessonData.wordIds || [];
     wordIds.forEach(id => {
       if (!this.state.user.wordsLearned.includes(id)) {
         this.state.user.wordsLearned.push(id);
+      }
+      // Планируем первое повторение через 1 день (если ещё не запланировано)
+      if (!this.state.user.wordReviews[id]) {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        this.state.user.wordReviews[id] = { interval: 1, nextReview: tomorrow.toISOString() };
       }
     });
 
@@ -1429,22 +1501,27 @@ const App = {
     this.showConfetti();
   },
 
-  // Выход из урока
+  // Выход из урока — сохраняем позицию, пользователь сможет продолжить
   exitExercise() {
+    const doExit = () => {
+      this._saveInProgressLesson(); // запоминаем текущий вопрос
+      this.navigate('dashboard');
+    };
+
     if (this.tg) {
       this.tg.showPopup({
         title: 'Выйти из урока?',
-        message: 'Прогресс текущего урока будет потерян.',
+        message: 'Прогресс сохранится — сможешь продолжить с этого места.',
         buttons: [
           { id: 'exit', type: 'destructive', text: 'Выйти' },
           { id: 'stay', type: 'cancel', text: 'Остаться' }
         ]
       }, (btnId) => {
-        if (btnId === 'exit') this.navigate('dashboard');
+        if (btnId === 'exit') doExit();
       });
     } else {
-      if (confirm('Выйти из урока? Прогресс будет потерян.')) {
-        this.navigate('dashboard');
+      if (confirm('Выйти из урока? Прогресс сохранится.')) {
+        doExit();
       }
     }
   },
@@ -1838,49 +1915,44 @@ const App = {
     } catch (e) { /* игнорируем */ }
   },
 
-  loadProgress() {
-    let saved = null;
+  // Применяет данные из хранилища к state.user, сохраняя дефолты для новых полей
+  _applyUserData(parsed) {
+    this.state.user = {
+      ...this.state.user,
+      ...parsed,
+      settings: { ...this.state.user.settings, ...(parsed.settings || {}) }
+    };
+  },
 
-    // Пробуем localStorage (быстрее)
+  // Загрузка прогресса:
+  // 1. localStorage — быстро, применяем как стартовую базу
+  // 2. CloudStorage — Telegram хранит на своих серверах, авторитетнее localStorage.
+  //    Ждём до 3 секунд. Пользователь не может подменить CloudStorage через DevTools.
+  //    Это защищает trialStartDate от сброса через очистку localStorage.
+  async loadProgress() {
     try {
-      saved = localStorage.getItem('repetitor_progress');
+      const saved = localStorage.getItem('repetitor_progress');
+      if (saved) this._applyUserData(JSON.parse(saved));
     } catch (e) { /* игнорируем */ }
 
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Мержим с дефолтами чтобы не потерять новые поля
-        this.state.user = {
-          ...this.state.user,
-          ...parsed,
-          settings: { ...this.state.user.settings, ...(parsed.settings || {}) }
-        };
-
-        // Восстанавливаем настройки на экране
-        const pinyinToggle = document.getElementById('setting-pinyin');
-        const soundToggle = document.getElementById('setting-sound');
-        if (pinyinToggle) pinyinToggle.checked = this.state.user.settings.pinyin;
-        if (soundToggle) soundToggle.checked = this.state.user.settings.sound;
-      } catch (e) {
-        console.error('Ошибка загрузки прогресса:', e);
-      }
-    }
-
-    // Telegram CloudStorage (async)
     if (this.tg?.CloudStorage) {
-      this.tg.CloudStorage.getItem('userProgress', (err, value) => {
-        if (!err && value) {
-          try {
-            const parsed = JSON.parse(value);
-            this.state.user = {
-              ...this.state.user,
-              ...parsed,
-              settings: { ...this.state.user.settings, ...(parsed.settings || {}) }
-            };
-          } catch (e) { /* игнорируем */ }
-        }
+      await new Promise((resolve) => {
+        const timer = setTimeout(resolve, 3000);
+        this.tg.CloudStorage.getItem('userProgress', (err, value) => {
+          clearTimeout(timer);
+          if (!err && value) {
+            try { this._applyUserData(JSON.parse(value)); } catch (e) { /* игнорируем */ }
+          }
+          resolve();
+        });
       });
     }
+
+    // Синхронизируем UI настроек после загрузки
+    const pinyinToggle = document.getElementById('setting-pinyin');
+    const soundToggle  = document.getElementById('setting-sound');
+    if (pinyinToggle) pinyinToggle.checked = this.state.user.settings.pinyin;
+    if (soundToggle)  soundToggle.checked  = this.state.user.settings.sound;
   },
 
   // =============================================
@@ -1959,6 +2031,146 @@ const App = {
       popup._onClose = null;
       if (typeof fn === 'function') fn();
     }, 380);
+  },
+
+  // =============================================
+  // ЭКРАН: ВСЕ УРОКИ ПРОЙДЕНЫ
+  // =============================================
+  showAllDone() {
+    const user = this.state.user;
+    document.getElementById('all-done-words').textContent = user.wordsLearned.length;
+    document.getElementById('all-done-xp').textContent = user.xp;
+    user.allDoneSeen = true;
+    this.saveProgress();
+    this.navigate('all-done');
+    this.showConfetti();
+  },
+
+  // =============================================
+  // SRS: ПОВТОРЕНИЕ СЛОВ
+  // =============================================
+
+  // Интервалы повторения (дни)
+  _SRS_INTERVALS: [1, 3, 7, 14, 30],
+
+  // Слова, которые нужно повторить сегодня
+  getDueWords() {
+    const now = new Date();
+    const reviews = this.state.user.wordReviews || {};
+    return Object.keys(reviews)
+      .filter(id => new Date(reviews[id].nextReview) <= now)
+      .slice(0, 20)
+      .map(id => this.data.words.find(w => w.id === Number(id)))
+      .filter(Boolean);
+  },
+
+  // Обновить расписание для слова
+  _scheduleWordReview(wordId, correct) {
+    const reviews = this.state.user.wordReviews;
+    const existing = reviews[wordId] || { interval: 1 };
+    let nextInterval;
+    if (correct) {
+      const idx = this._SRS_INTERVALS.indexOf(existing.interval);
+      nextInterval = idx >= 0 && idx < this._SRS_INTERVALS.length - 1
+        ? this._SRS_INTERVALS[idx + 1]
+        : 30;
+    } else {
+      nextInterval = 1;
+    }
+    const nextDate = new Date();
+    nextDate.setDate(nextDate.getDate() + nextInterval);
+    reviews[wordId] = { interval: nextInterval, nextReview: nextDate.toISOString() };
+  },
+
+  // Начать сессию повторения
+  startReview() {
+    const due = this.getDueWords();
+    if (due.length === 0) {
+      const msg = 'Нет слов для повторения — возвращайся позже!';
+      if (this.tg) {
+        this.tg.showPopup({ title: '🎉 Готово', message: msg, buttons: [{ type: 'ok' }] });
+      } else {
+        alert(msg);
+      }
+      return;
+    }
+    // Перемешиваем
+    const shuffled = [...due].sort(() => Math.random() - 0.5).slice(0, 10);
+    this.state.review = { words: shuffled, index: 0, correct: 0 };
+    this.navigate('review');
+    this.renderReviewCard();
+  },
+
+  // Отрисовать текущую карточку
+  renderReviewCard() {
+    const { words, index } = this.state.review;
+    const total = words.length;
+    const word = words[index];
+
+    document.getElementById('review-hanzi').textContent = word.hanzi;
+    document.getElementById('review-pinyin').textContent = word.pinyin;
+    document.getElementById('review-translation-wrap').innerHTML = '';
+
+    const pct = Math.round((index / total) * 100);
+    document.getElementById('review-progress-fill').style.width = `${pct}%`;
+    document.getElementById('review-progress-text').textContent = `${index + 1}/${total}`;
+
+    document.getElementById('review-action').innerHTML =
+      `<button class="review-show-btn" onclick="App.revealReview()">Показать перевод</button>`;
+  },
+
+  // Открыть перевод
+  revealReview() {
+    const { words, index } = this.state.review;
+    const word = words[index];
+
+    const wrap = document.getElementById('review-translation-wrap');
+    wrap.innerHTML = `<div class="review-translation">${word.translation}</div>`;
+
+    document.getElementById('review-action').innerHTML = `
+      <div class="review-answer-btns">
+        <button class="review-btn-dont" onclick="App.answerReview(false)">✗ Не знаю</button>
+        <button class="review-btn-know" onclick="App.answerReview(true)">✓ Знаю</button>
+      </div>`;
+    this.haptic('selection');
+  },
+
+  // Ответ: знал / не знал
+  answerReview(correct) {
+    const rev = this.state.review;
+    const word = rev.words[rev.index];
+    this._scheduleWordReview(String(word.id), correct);
+    if (correct) rev.correct++;
+    this.saveProgress();
+    this.haptic(correct ? 'success' : 'error');
+    rev.index++;
+
+    if (rev.index >= rev.words.length) {
+      this._finishReview();
+    } else {
+      this.renderReviewCard();
+    }
+  },
+
+  // Завершение сессии
+  _finishReview() {
+    const { words, correct } = this.state.review;
+    const total = words.length;
+    document.getElementById('review-progress-fill').style.width = '100%';
+    document.getElementById('review-progress-text').textContent = `${total}/${total}`;
+    document.getElementById('review-card').innerHTML = `
+      <div style="font-size:56px;margin-bottom:12px">🎉</div>
+      <div style="font-size:20px;font-weight:800;margin-bottom:8px">Повторение завершено!</div>
+      <div style="font-size:15px;color:var(--text-hint)">${correct} из ${total} слов — правильно</div>`;
+    document.getElementById('review-action').innerHTML =
+      `<button class="review-show-btn" onclick="App.navigate('dashboard')">← На главную</button>`;
+    this.showConfetti();
+    this.haptic('success');
+  },
+
+  // Выйти из повторения
+  exitReview() {
+    this.navigate('dashboard');
   },
 
   // Экран: пробный период пройден

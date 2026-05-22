@@ -19,18 +19,25 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, 'data.json');
 
-// ─── Чтение / запись файла ───────────────────────────────────────────────────
+// ─── In-memory кэш — файл читается один раз при первом обращении ─────────────
+
+let _cache = null;
 
 function readDB() {
+  if (_cache) return _cache;
+
   if (!fs.existsSync(DB_PATH)) {
-    const empty = { users: [], progress: [], access: [], payments: [], homework: [] };
-    fs.writeFileSync(DB_PATH, JSON.stringify(empty, null, 2), 'utf8');
-    return empty;
+    _cache = { users: [], progress: [], access: [], payments: [], homework: [] };
+    fs.writeFileSync(DB_PATH, JSON.stringify(_cache, null, 2), 'utf8');
+    return _cache;
   }
-  return JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+
+  _cache = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+  return _cache;
 }
 
 function writeDB(data) {
+  _cache = data; // обновляем кэш сразу
   fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf8');
 }
 
